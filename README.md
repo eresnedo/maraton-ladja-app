@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Maraton lađa — web
 
-## Getting Started
+Next.js (App Router) + Supabase. Zamjena za stari skup statičnih `.html` fajlova u `ml-web/` — isti dizajn (crveno-plavi sustav, Barlow Condensed + Fraunces), sad na stacku koji drži bazu za rezultate, novosti i galeriju.
 
-First, run the development server:
+## Pokretanje lokalno
 
 ```bash
+npm install
+cp .env.local.example .env.local   # popuni Supabase URL/key kad projekt postoji
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Stranice rade i bez `.env.local` — padaju natrag na ugrađeni (seed) sadržaj u `src/data/`, tako da se dizajn uvijek može vidjeti bez baze.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Baza (Supabase)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Napravi projekt na [supabase.com](https://supabase.com).
+2. U **SQL Editor** zalijepi i pokreni `supabase/schema.sql` — pravi tablice za posade, izdanja, rezultate, novosti i galeriju (s pogledom `medal_table` za rang ljestvicu).
+3. Project → Settings → API → kopiraj `URL` i `anon public key` u `.env.local`.
+4. Za upload fotki galerije: Storage → novi bucket (npr. `gallery`, javni read).
 
-## Learn More
+## Struktura
 
-To learn more about Next.js, take a look at the following resources:
+- `src/app/` — stranice (App Router), jedna mapa po ruti
+- `src/components/Header.tsx`, `Footer.tsx` — zajednički nav/footer (nav se mijenja u `src/data/nav.ts`)
+- `src/lib/supabase.ts` — klijent za bazu (vraća `null` dok env nije postavljen)
+- `src/data/*-seed.ts` — fallback sadržaj dok baza nije spojena/popunjena
+- `supabase/schema.sql` — cijela shema baze
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Što je migrirano, što ostaje
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Gotovo: layout, nav/footer, Kontakt, Novosti (čita iz baze).
+Sljedeće: Naslovnica (hero/ruta/tracker animacije), ostale podstranice (Utrke, Rezultati, O nama, Galerija) — prebacuju se po istom obrascu kao Novosti, s podacima iz baze gdje ima smisla (rezultati, galerija), statično gdje je sadržaj fiksan (povijest, o udruzi).
