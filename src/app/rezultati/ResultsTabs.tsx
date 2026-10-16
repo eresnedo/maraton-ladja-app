@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 const TABS = [
   { href: "/rezultati/poredak-po-godinama", label: "Poredak po godinama" },
+  { href: "/rezultati/maraton-ladarica", label: "Maraton lađarica" },
   { href: "/rezultati/rang-ljestvica", label: "Rang ljestvica" },
   { href: "/rezultati/arhiva", label: "Arhiva izdanja" },
   { href: "/rezultati/kuca-slavnih", label: "Kuća slavnih" },

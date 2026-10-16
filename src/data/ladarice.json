@@ -1,0 +1,98 @@
+{
+ "edition": 13,
+ "date": "2026-08-06",
+ "route": "Metković – Opuzen",
+ "record": {
+  "time": "50:33",
+  "crew": "Donjanke Donje",
+  "year": 2020
+ },
+ "results": [
+  {
+   "p": 1,
+   "n": "Udruga lađarica „Sisak” Sisak",
+   "t": 3489
+  },
+  {
+   "p": 2,
+   "n": "MUP RH – Lađarice u plavom",
+   "t": 3596
+  },
+  {
+   "p": 3,
+   "n": "Udruga lađara Zagreb",
+   "t": 3600
+  },
+  {
+   "p": 4,
+   "n": "Udruga lađara „Marsonia” Slavonski Brod",
+   "t": 3645
+  },
+  {
+   "p": 5,
+   "n": "Udruga „Gusarice” Metković",
+   "t": 3698
+  },
+  {
+   "p": 6,
+   "n": "Udruga lađara „Stablina” Stablina",
+   "t": 3721
+  },
+  {
+   "p": 7,
+   "n": "Udruga lađara „Baćina” Baćina",
+   "t": 3737
+  },
+  {
+   "p": 8,
+   "n": "Sportsko veslačka udruga „Đakovo” Đakovo",
+   "t": 3743
+  },
+  {
+   "p": 9,
+   "n": "Udruga lađara „Gusari” Komin",
+   "t": 3766
+  },
+  {
+   "p": 10,
+   "n": "Udruga lađarica „Metkovke” Metković",
+   "t": 3888
+  },
+  {
+   "p": 11,
+   "n": "HPB – Sport",
+   "t": 3930
+  },
+  {
+   "p": 12,
+   "n": "Udruga lađara Jerkovac – Jerkovačke lađarice",
+   "t": 3995
+  },
+  {
+   "p": 13,
+   "n": "Udruga za očuvanje neretvanske baštine Opuzen",
+   "t": 4016
+  },
+  {
+   "p": 14,
+   "n": "Lađarice Pivac Otrić Seoci",
+   "t": 4082
+  },
+  {
+   "p": 15,
+   "n": "HKUD „Vladimir Nazor” Salašari Somborski",
+   "t": 4091
+  },
+  {
+   "p": 16,
+   "n": "Udruga Vinkovačke veslačice Vinkovci",
+   "t": 4098
+  }
+ ],
+ "ooc": [
+  {
+   "n": "Udruga „Gusarice” 2 Metković",
+   "t": 4200
+  }
+ ]
+}

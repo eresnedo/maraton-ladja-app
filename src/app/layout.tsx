@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SITE_URL } from "@/lib/site";
+
+const DESC = "Službena stranica Maratona lađa. 22,5 km tradicionalnim neretvanskim lađama od Metkovića do Ploča.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Maraton lađa",
-  description: "Službena stranica Maratona lađa. 22,5 km tradicionalnim neretvanskim lađama od Metkovića do Ploča.",
+  description: DESC,
+  openGraph: {
+    type: "website",
+    locale: "hr_HR",
+    siteName: "Maraton lađa",
+    title: "Maraton lađa",
+    description: DESC,
+    images: [{ url: "/images/ruta-karta.jpg", width: 1920, height: 578, alt: "Ruta Maratona lađa, Metković – Ploče" }],
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

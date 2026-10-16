@@ -86,7 +86,6 @@ export default function Header({ transparent = false }: { transparent?: boolean 
         </nav>
 
         <div className="flex items-center gap-5">
-          <a href="#" className={"hidden sm:block text-sm font-600 hover:text-red " + textClass}>EN</a>
           <button
             className={"lg:hidden p-2 -mr-2 " + (solid ? "text-ink" : "text-white")}
             aria-label={open ? "Zatvori izbornik" : "Otvori izbornik"}

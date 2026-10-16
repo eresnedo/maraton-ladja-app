@@ -14,7 +14,7 @@ export default function RezultatiLayout({ children }: { children: React.ReactNod
             <Link href="/">Naslovnica</Link> / Rezultati
           </p>
           <h1 className="x-display">Rezultati</h1>
-          <p>Službeni poredak svih Maratona lađa od 1998. godine.</p>
+          <p>Službeni poredak Maratona lađa od 1998. godine i Maratona lađarica.</p>
         </div>
       </section>
       <ResultsTabs />

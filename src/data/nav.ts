@@ -18,6 +18,7 @@ export const MENU: NavItem[] = [
     children: [
       { label: "Rang ljestvica", href: "/rezultati/rang-ljestvica" },
       { label: "Poredak po godinama", href: "/rezultati/poredak-po-godinama" },
+      { label: "Maraton lađarica", href: "/rezultati/maraton-ladarica" },
       { label: "Arhiva izdanja", href: "/rezultati/arhiva" },
       { label: "Kuća slavnih", href: "/rezultati/kuca-slavnih" },
     ],
