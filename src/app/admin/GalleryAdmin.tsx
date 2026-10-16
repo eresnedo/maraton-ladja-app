@@ -32,6 +32,7 @@ export default function GalleryAdmin() {
     <section>
       <div className="ad-head">
         <h1>Galerija</h1>
+        <ImportOld onDone={load} />
         <button className="ad-btn" onClick={() => setEdit({ slug: "", title: "", year_label: String(new Date().getFullYear()) + ".", cover_url: "", sort: (list[0]?.sort ?? 20) - 10, published: false })}>+ Novi album</button>
       </div>
       {err && <p className="ad-err">{err}</p>}
@@ -182,5 +183,76 @@ function AlbumEditor({ item, onDone }: { item: Album; onDone: () => void }) {
         ))}
       </ul>
     </section>
+  );
+}
+
+// ---------- Jednokratni uvoz albuma sa starog weba (fotografije ostaju na maraton-ladja.hr) ----------
+const OLD_SEEDS = ["vecer-tradicije-2025", "28-maraton-ladja", "brzinske-utrke-2025", "27-maraton-ladja", "navalis-prag-2022", "arhivske-fotografije"];
+type OldAlbum = { title: string; desc: string; cover: string; path: string };
+
+function ImportOld({ onDone }: { onDone: () => void }) {
+  const [msg, setMsg] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  async function run() {
+    if (!confirm("Uvesti sve albume sa starog weba maraton-ladja.hr? Albumi koji su već uvezeni preskaču se.")) return;
+    setBusy(true);
+    try {
+      setMsg("Čitam popis albuma…");
+      const res = await fetch("/api/stari-web/galerija").then((r) => r.json());
+      if (res.error) throw new Error(res.error);
+      const albums: OldAlbum[] = res.albums;
+
+      // ukloni privremene prazne albume koje stari web zamjenjuje
+      const { data: seeds } = await supabase!.from("gallery_albums").select("id, slug, gallery_photos(count)").in("slug", OLD_SEEDS);
+      for (const a of seeds || []) if (!((a.gallery_photos as { count: number }[])?.[0]?.count)) await supabase!.from("gallery_albums").delete().eq("id", a.id);
+
+      let done = 0, photos = 0;
+      for (let i = 0; i < albums.length; i++) {
+        const o = albums[i];
+        const slug = o.path.slice(1);
+        setMsg(`${i + 1} / ${albums.length}: ${o.title}`);
+        const { data: existing } = await supabase!.from("gallery_albums").select("id, gallery_photos(count)").eq("slug", slug).maybeSingle();
+        if ((existing?.gallery_photos as { count: number }[] | undefined)?.[0]?.count) continue;
+        const list = await fetch(`/api/stari-web/album?path=${encodeURIComponent(o.path)}`).then((r) => r.json());
+        const urls: string[] = list.photos || [];
+        if (!urls.length) continue;
+        const year = o.desc.match(/(\d{4})\./)?.[1];
+        const row = {
+          slug,
+          title: o.title.replace(/\s+FOTO$/i, "").replace(/\s+/g, " ").trim(),
+          year_label: /navalis/i.test(o.title) ? "Prag, 2022." : year ? `${year}.` : /arhiv/i.test(o.title) ? "Arhiva" : "",
+          cover_url: o.cover,
+          sort: 100 + i * 10,
+          published: true,
+        };
+        let id = existing?.id as string | undefined;
+        if (id) await supabase!.from("gallery_albums").update(row).eq("id", id);
+        else {
+          const { data, error } = await supabase!.from("gallery_albums").insert(row).select("id").single();
+          if (error) throw error;
+          id = data.id;
+        }
+        for (let k = 0; k < urls.length; k += 500) {
+          const chunk = urls.slice(k, k + 500).map((url, j) => ({ album_id: id, url, sort: k + j + 1 }));
+          const { error } = await supabase!.from("gallery_photos").insert(chunk);
+          if (error) throw error;
+        }
+        done++;
+        photos += urls.length;
+      }
+      setMsg(`Gotovo: ${done} albuma, ${photos} fotografija.`);
+      onDone();
+    } catch (e) {
+      setMsg("Greška: " + (e as Error).message);
+    }
+    setBusy(false);
+  }
+
+  return (
+    <span className="ad-import">
+      {msg && <span className="ad-busy">{msg}</span>}
+      <button className="ad-btn ad-ghost" disabled={busy} onClick={run}>{busy ? "Uvozim…" : "Uvezi sa starog weba"}</button>
+    </span>
   );
 }

@@ -57,3 +57,5 @@
 .ad-photos div { display: flex; justify-content: space-between; gap: .4rem; padding: .45rem .5rem; font-size: .72rem; }
 .ad-photos button { background: none; border: 0; padding: 0; font: inherit; color: var(--navy); cursor: pointer; text-decoration: underline; }
 .ad-photos span { font-weight: 700; color: var(--red); }
+.ad-import { display: flex; align-items: center; gap: .8rem; margin-left: auto; }
+.ad-head:has(.ad-import) > .ad-btn:last-child { margin-left: 0; }
