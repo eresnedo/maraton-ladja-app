@@ -9,6 +9,7 @@ import { MENU } from "@/data/nav";
 export default function Header({ transparent = false }: { transparent?: boolean }) {
   const [solid, setSolid] = useState(!transparent);
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
     if (!transparent) return;
@@ -18,18 +19,42 @@ export default function Header({ transparent = false }: { transparent?: boolean 
     return () => window.removeEventListener("scroll", onScroll);
   }, [transparent, open]);
 
+  // mobitel: header se skriva dok skrolaš prema dolje, vraća se čim kreneš gore
+  useEffect(() => {
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const mobile = window.innerWidth < 1024;
+      if (!mobile || open || y < 80) setHidden(false);
+      else if (y > last + 4) setHidden(true);
+      else if (y < last - 4) setHidden(false);
+      last = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    document.documentElement.dataset.nav = hidden ? "hidden" : "shown";
+  }, [hidden]);
+
   const textClass = solid ? "text-ink/70" : "text-white/75";
 
   return (
     <header
       className={
-        "fixed top-0 inset-x-0 z-50 transition-all duration-300 " +
-        (solid ? "bg-white shadow-sm" : "")
+        "fixed top-0 inset-x-0 z-50 transition-[background-color,box-shadow,transform] duration-300 " +
+        (solid ? "bg-white shadow-sm " : "") +
+        (hidden ? "-translate-y-full" : "translate-y-0")
       }
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-10 h-16 lg:h-20 flex items-center justify-between gap-8">
         <Link href="/" className="flex items-center shrink-0">
-          <img src="/img/logo.png" alt="Maraton lađa" width={56} height={56} className="h-10 w-10 lg:h-14 lg:w-14 object-contain" />
+          <img src="/img/logo.png" srcSet="/img/logo.png 1x, /img/logo@2x.png 2x" alt="Maraton lađa – Udruga lađara Neretve" width={56} height={58} className="h-11 w-auto lg:h-14 object-contain" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-9 text-[15px] font-600 tight">

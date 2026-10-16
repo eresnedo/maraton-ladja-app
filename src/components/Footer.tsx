@@ -9,7 +9,7 @@ export default function Footer() {
         </div>
         <div className="mt-16 grid gap-10 md:grid-cols-3 border-t border-ink/12 pt-10">
           <div>
-            <img src="/img/logo.png" alt="Udruga lađara Neretve" width={96} height={96} className="h-24 w-24 object-contain mb-5" />
+            <img src="/img/logo@2x.png" alt="Udruga lađara Neretve" width={96} height={99} className="h-24 w-auto object-contain mb-5" />
             <p className="text-ink/60 text-sm max-w-xs leading-relaxed">
               Organizira Udruga lađara Neretve. Tradicija Neretve od 1998. godine.
             </p>

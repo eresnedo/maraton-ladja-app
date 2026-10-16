@@ -1,5 +1,5 @@
 /* ---------- Rezultati: tablice i navigacija ---------- */
-.r-tabs { position: sticky; top: 64px; z-index: 20; background: #fff; border-bottom: 1px solid rgba(13,21,51,.12); }
+.r-tabs { position: sticky; top: 64px; z-index: 20; transition: top .3s; background: #fff; border-bottom: 1px solid rgba(13,21,51,.12); }
 @media (min-width: 1024px) { .r-tabs { top: 80px; } }
 .r-tabs .x-wrap { display: flex; gap: 2rem; overflow-x: auto; scrollbar-width: none; }
 .r-tabs .x-wrap::-webkit-scrollbar { display: none; }
@@ -79,3 +79,5 @@
   .r-edition { gap: 1.6rem; }
   .r-main { padding-top: 2rem; }
 }
+
+html[data-nav="hidden"] .r-tabs { top: 0; }
