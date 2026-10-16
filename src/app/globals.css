@@ -64,7 +64,7 @@ body {
 /* ---------- page hero (podstranice) ---------- */
 .x-phero {
   position: relative;
-  padding: 10.5rem 0 5rem;
+  padding: 8.5rem 0 4rem;
   background: var(--navy);
   color: #fff;
   overflow: hidden;
@@ -107,3 +107,5 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .js .x-r { opacity: 1; transform: none; transition: none; }
 }
+
+@media (max-width: 860px) { .x-phero { padding: 6rem 0 2.8rem; } .x-phero h1 { font-size: clamp(2.6rem, 11vw, 3.6rem); } .x-phero p { font-size: 1rem; } }

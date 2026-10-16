@@ -27,12 +27,12 @@ export default function Header({ transparent = false }: { transparent?: boolean 
         (solid ? "bg-white shadow-sm" : "")
       }
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 h-28 flex items-center justify-between gap-8">
+      <div className="max-w-7xl mx-auto px-5 sm:px-10 h-16 lg:h-20 flex items-center justify-between gap-8">
         <Link href="/" className="flex items-center shrink-0">
-          <img src="/img/logo.png" alt="Maraton lađa" width={80} height={80} className="h-20 w-20 object-contain" />
+          <img src="/img/logo.png" alt="Maraton lađa" width={56} height={56} className="h-10 w-10 lg:h-14 lg:w-14 object-contain" />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-9 text-[16px] font-600 tight">
+        <nav className="hidden lg:flex items-center gap-9 text-[15px] font-600 tight">
           {MENU.map((item) =>
             item.children ? (
               <div className="relative group" key={item.label}>

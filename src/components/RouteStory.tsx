@@ -89,6 +89,7 @@ export default function RouteStory() {
     const bars = $$<HTMLElement>(".x-rs-rail i");
     const kmEl = sec.querySelector<HTMLElement>(".x-rs-km b span")!;
     const hint = sec.querySelector<HTMLElement>(".x-rs-hint")!;
+    const gridEl = sec.querySelector<HTMLElement>(".x-rs-grid");
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let map: MLMap | null = null;
@@ -102,13 +103,13 @@ export default function RouteStory() {
 
     function camera(fr: Frame) {
       const m = mobile();
-      const near = { zoom: m ? 13.1 : 13.9, pitch: m ? 54 : 60 };
+      const near = { zoom: m ? 13.4 : 13.9, pitch: m ? 45 : 60 };
       if (fr.phase === "intro") {
         const t = ease(fr.t);
         const c = pointAt(0);
         return {
           center: [lerp(OVERVIEW.center[0], c[0], t), lerp(OVERVIEW.center[1], c[1], t)] as LngLat,
-          zoom: lerp(OVERVIEW.zoom - (m ? 0.9 : 0), near.zoom, t),
+          zoom: lerp(OVERVIEW.zoom - (m ? 1.35 : 0), near.zoom, t),
           pitch: lerp(OVERVIEW.pitch, near.pitch, t),
           bearingTarget: null as number | null,
         };
@@ -118,7 +119,7 @@ export default function RouteStory() {
         const c = pointAt(LEN);
         return {
           center: [lerp(c[0], OVERVIEW.center[0], t), lerp(c[1], OVERVIEW.center[1], t)] as LngLat,
-          zoom: lerp(near.zoom, OVERVIEW.zoom - (m ? 0.9 : 0), t),
+          zoom: lerp(near.zoom, OVERVIEW.zoom - (m ? 1.35 : 0), t),
           pitch: lerp(near.pitch, OVERVIEW.pitch + 6, t),
           bearingTarget: null,
         };
@@ -163,7 +164,7 @@ export default function RouteStory() {
           pitch: v.pitch,
           bearing,
           padding: m
-            ? { top: 40, bottom: innerHeight * 0.44, left: 0, right: 0 }
+            ? { top: 80, bottom: (gridEl?.offsetHeight || innerHeight * 0.4) + 10, left: 0, right: 0 }
             : { top: 0, bottom: 0, left: Math.min(620, innerWidth * 0.4), right: 0 },
         });
         if (ready) {
