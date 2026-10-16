@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactForm from "./ContactForm";
@@ -21,7 +22,7 @@ export default function KontaktPage() {
       <section className="x-phero">
         <div className="x-wrap">
           <p className="x-crumb">
-            <a href="/">Naslovnica</a> / Kontakt
+            <Link href="/">Naslovnica</Link> / Kontakt
           </p>
           <h1 className="x-display">Kontakt</h1>
           <p>Pitanja o prijavama, gostovanju na rijeci ili suradnji — udruga odgovara na svaki upit.</p>

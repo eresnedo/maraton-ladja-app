@@ -6,6 +6,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RouteStory from "@/components/RouteStory";
 import Partners from "@/components/Partners";
+import { ARTICLES } from "@/data/articles";
+
+const fmtNews = (iso: string) => new Date(iso + "T12:00:00").toLocaleDateString("hr-HR", { day: "numeric", month: "long", year: "numeric" });
 import "./home.css";
 
 // TODO Nedo: potvrdi datum s udrugom (druga subota u kolovozu, 17:00).
@@ -29,26 +32,6 @@ function useCountdown() {
   ];
 }
 
-const NEWS = [
-  {
-    date: "24. rujna 2026.",
-    title: "Lađa na Neretvi, ne plastika: Maraton bez plastike",
-    text: "Četrdesetak volontera, ronilaca i članova udruga očistilo je obalu i dno Neretve u Metkoviću.",
-    img: "https://maraton-ladja.hr/images/WhatsApp_Image_2026-09-21_at_14.20.32_1.jpeg",
-  },
-  {
-    date: "12. kolovoza 2026.",
-    title: "UL Crni put i UL Gusar Komin podijelili tron 29. Maratona lađa",
-    text: "Dramatična završnica i neizvjesna borba za vrh na 22,5 km od Metkovića do Ploča.",
-    img: "https://maraton-ladja.hr/images/770067796_18110548478287565_831642774667007538_n-1-scaled.jpg",
-  },
-  {
-    date: "12. kolovoza 2026.",
-    title: "Lađarice Siska slavile na 13. Maratonu lađarica",
-    text: "Neretvom je zaplovila ženska snaga na dionici Metković – Opuzen.",
-    img: "https://maraton-ladja.hr/images/13-Maraton-ladarica-pobjednice-UL-Sisak.jpg",
-  },
-];
 
 const CALENDAR = [
   { name: "Brzinske utrke", where: "Opuzen", when: "Datum u najavi", href: "/utrke/brzinske-utrke" },
@@ -178,14 +161,14 @@ export default function HomePage() {
             <Link href="/novosti" className="h-more">Sve novosti</Link>
           </div>
           <div className="h-cards">
-            {NEWS.map((n) => (
-              <Link key={n.title} href="/novosti" className="h-card">
+            {ARTICLES.slice(0, 3).map((n) => (
+              <Link key={n.slug} href={`/novosti/${n.slug}`} className="h-card">
                 <div className="h-card-img">
-                  <img src={n.img} alt="" loading="lazy" onError={hideBroken} />
+                  <img src={n.cover} alt="" loading="lazy" onError={hideBroken} />
                 </div>
-                <time>{n.date}</time>
+                <time>{fmtNews(n.date)}</time>
                 <h3>{n.title}</h3>
-                <p>{n.text}</p>
+                <p>{n.excerpt}</p>
               </Link>
             ))}
           </div>

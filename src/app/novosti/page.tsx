@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
@@ -35,7 +36,7 @@ export default async function NovostiPage() {
       <section className="x-phero">
         <div className="x-wrap">
           <p className="x-crumb">
-            <a href="/">Naslovnica</a> / Novosti
+            <Link href="/">Naslovnica</Link> / Novosti
           </p>
           <h1 className="x-display">Novosti</h1>
           <p>Sve aktivnosti Udruge lađara Neretve i Maratona lađa — od pripremnih utrka do dana finala.</p>

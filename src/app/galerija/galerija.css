@@ -1,0 +1,8 @@
+.g-grid { list-style: none; display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 900px) { .g-grid { grid-template-columns: repeat(4, 1fr); } }
+.g-img { aspect-ratio: 4 / 3; overflow: hidden; background: var(--paper); margin-bottom: .9rem; }
+.g-img img { width: 100%; height: 100%; object-fit: cover; }
+.g-grid b { display: block; font: 700 1.2rem/1.15 var(--disp); text-transform: uppercase; color: var(--navy); }
+.g-grid span { display: block; margin-top: .3rem; font-size: .88rem; color: rgba(8,9,13,.55); }
+.g-links { display: flex; flex-wrap: wrap; gap: .8rem; }
+.g-links .c-file { margin-top: .4rem; }

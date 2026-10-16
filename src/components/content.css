@@ -1,0 +1,58 @@
+/* ---------- Podstranice: zajednički blokovi ---------- */
+.x-phero.has-img { background: var(--navy2); }
+.c-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .35; }
+.x-phero .x-wrap { position: relative; z-index: 1; }
+
+.c-sec { padding: 5rem 0; background: #fff; }
+.c-alt { background: var(--paper); }
+.c-narrow { max-width: 52rem; }
+@media (max-width: 860px) { .c-sec { padding: 3.4rem 0; } }
+
+.c-head { margin-bottom: 2rem; max-width: 44rem; }
+.c-label { font: 700 .75rem/1 "Archivo", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--red); margin-bottom: .8rem; }
+.c-head h2 { font: 700 clamp(1.9rem, 3.8vw, 2.8rem)/1 var(--disp); text-transform: uppercase; color: var(--navy); }
+.c-sub { margin-top: .8rem; color: rgba(8,9,13,.62); font-size: 1.05rem; }
+
+.c-facts { display: grid; grid-template-columns: 1fr; gap: 1px; background: rgba(13,21,51,.12); border: 1px solid rgba(13,21,51,.12); }
+@media (min-width: 640px) { .c-facts { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .c-facts { grid-template-columns: repeat(var(--cols, 3), 1fr); } }
+.c-facts > div { background: #fff; padding: 1.6rem 1.5rem; }
+.c-alt .c-facts > div { background: #fff; }
+.c-facts dt { font: 700 .7rem/1 "Archivo", sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--red); }
+.c-facts dd { margin: .75rem 0 .45rem; font: 700 clamp(1.5rem, 2.6vw, 2.2rem)/1.05 var(--disp); text-transform: uppercase; color: var(--navy); overflow-wrap: anywhere; }
+.c-facts p { color: rgba(8,9,13,.65); line-height: 1.55; font-size: .95rem; }
+.c-facts a { color: var(--navy); border-bottom: 1px solid var(--red); }
+
+.c-prose { max-width: 46rem; color: rgba(8,9,13,.8); font-size: 1.08rem; line-height: 1.75; }
+.c-prose p + p { margin-top: 1.1rem; }
+.c-prose b, .c-prose strong { color: var(--navy); }
+.c-prose a { color: var(--navy); border-bottom: 1px solid var(--red); }
+.c-prose h3 { margin: 2.2rem 0 .8rem; font: 700 1.5rem/1.1 var(--disp); text-transform: uppercase; color: var(--navy); }
+.c-prose ol, .c-prose ul { margin: 1rem 0 1.4rem; padding-left: 0; list-style: none; border-top: 1px solid rgba(13,21,51,.12); }
+.c-prose ol { counter-reset: n; }
+.c-prose li { padding: .6rem 0; border-bottom: 1px solid rgba(13,21,51,.1); font-size: 1rem; }
+.c-prose ol li { counter-increment: n; display: grid; grid-template-columns: 2.6rem 1fr; }
+.c-prose ol li::before { content: counter(n) "."; color: rgba(8,9,13,.45); font-variant-numeric: tabular-nums; }
+.c-prose ol li:nth-child(-n+3)::before { color: var(--red); font-weight: 700; }
+.c-prose ol li:first-child { font-weight: 700; color: var(--navy); }
+
+.c-quote { margin: 2rem 0; padding: .4rem 0 .4rem 1.4rem; border-left: 3px solid var(--red); font: 700 clamp(1.4rem, 2.6vw, 2rem)/1.2 var(--disp); text-transform: uppercase; color: var(--navy); max-width: 44rem; }
+
+.c-rows { list-style: none; border-top: 1px solid rgba(13,21,51,.18); }
+.c-rows li { display: flex; justify-content: space-between; align-items: baseline; gap: 1.5rem; padding: 1.2rem 0; border-bottom: 1px solid rgba(13,21,51,.18); }
+.c-rows b { font: 700 clamp(1.2rem, 2.2vw, 1.6rem)/1.15 var(--disp); text-transform: uppercase; color: var(--navy); }
+.c-rows span { color: rgba(8,9,13,.6); white-space: nowrap; }
+@media (max-width: 639px) { .c-rows li { flex-direction: column; gap: .3rem; } }
+
+.c-note { margin-top: 1.6rem; padding: 1rem 1.2rem; background: #fff; border-left: 3px solid var(--navy); color: rgba(8,9,13,.7); font-size: .95rem; max-width: 46rem; }
+.c-sec:not(.c-alt) .c-note { background: var(--paper); }
+
+.c-cta { background: var(--navy); color: #fff; padding: 3.6rem 0; }
+.c-cta .x-wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.6rem; }
+.c-cta h2 { font: 700 clamp(1.6rem, 3vw, 2.2rem)/1.05 var(--disp); text-transform: uppercase; }
+.c-cta p { margin-top: .5rem; color: rgba(255,255,255,.7); }
+
+.c-file { display: inline-flex; align-items: center; gap: .8rem; margin-top: 1.4rem; padding: 1rem 1.3rem; border: 1px solid rgba(13,21,51,.2); color: var(--navy); font-weight: 700; }
+.c-file:hover { border-color: var(--red); }
+.c-file small { font-weight: 400; color: rgba(8,9,13,.55); }
+.x-phero h1.c-long { font-size: clamp(2.2rem, 4.6vw, 3.8rem); line-height: 1; max-width: 22ch; }

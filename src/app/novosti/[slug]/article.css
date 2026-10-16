@@ -1,0 +1,13 @@
+.a-date { display: block; font: 700 .8rem/1 "Archivo", sans-serif; letter-spacing: .06em; color: var(--red); margin-bottom: 1.4rem; }
+.a-cover { margin: 0 0 2.2rem; aspect-ratio: 16 / 9; overflow: hidden; background: var(--paper); }
+.a-cover img { width: 100%; height: 100%; object-fit: cover; }
+.a-schedule li { display: block; font-variant-numeric: tabular-nums; }
+.a-more { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 1.4rem; }
+.a-more h2 { font: 700 1.6rem/1 var(--disp); text-transform: uppercase; color: var(--navy); }
+.a-more a { font: 700 .85rem/1 "Archivo", sans-serif; text-transform: uppercase; color: var(--navy); border-bottom: 2px solid var(--red); padding-bottom: .3rem; }
+.a-list { list-style: none; display: grid; gap: 1px; background: rgba(13,21,51,.12); border: 1px solid rgba(13,21,51,.12); }
+@media (min-width: 800px) { .a-list { grid-template-columns: repeat(3, 1fr); } }
+.a-list a { display: block; height: 100%; background: #fff; padding: 1.4rem; }
+.a-list time { display: block; font-size: .8rem; color: rgba(8,9,13,.5); margin-bottom: .5rem; }
+.a-list b { font: 700 1.2rem/1.15 var(--disp); text-transform: uppercase; color: var(--navy); }
+.a-list a:hover b { color: var(--red); }
