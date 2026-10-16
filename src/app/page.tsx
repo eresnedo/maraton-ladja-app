@@ -6,6 +6,22 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./home.css";
 
+// Službena ruta Maratona lađa, Metković -> Ploče, 22,58 km (izvor: maraton-ladja.hr).
+const STOPS = [
+  { km: 0, label: "0,0", name: "Metković", sub: "START", desc: "Početak epske borbe. Spektakularan start ispod mosta, stotine lađa kreću istovremeno uz gromoglasno navijanje i zvukove sirena." },
+  { km: 4.5, label: "4,5", name: "Kula Norinska", desc: "Prolazak uz staru kulu gdje se rječica Norin ulijeva u Neretvu. Ovdje je rijeka nešto uža i česta su prva velika pretjecanja." },
+  { km: 6.0, label: "6,0", name: "Krvavac", desc: "Živopisno mjesto s velikim brojem navijača na obali. Lađari ovdje osjećaju prvi pravi umor, ali ih publika nosi naprijed." },
+  { km: 9.5, label: "9,5", name: "Opuzen", desc: "Središte doline i jedino mjesto gdje je dozvoljena zamjena veslača. Ovdje vlada ogromna gužva, a taktika brze zamjene često odlučuje pobjednika." },
+  { km: 13.0, label: "13,0", name: "Komin", desc: "Najduže mjesto na ruti s tradicijom apsolutno najžešćeg navijanja. Lokalni navijači priređuju bakljade i vatrenu podršku koja daje novi elan." },
+  { km: 16.5, label: "16,5", name: "Banja", desc: "Ulazak u donji, širi tok. Ovdje se rijeka mijenja, vjetar i valovi postaju jači, a izdržljivost ekipa se stavlja na najveći test." },
+  { km: 18.0, label: "18,0", name: "Šarić Struga", desc: "Zadnji trzaji snage prije samog ušća. Publika neumorno bodri veslače koji sada daju svoje posljednje atome snage." },
+  { km: 19.5, label: "19,5", name: "Rogotin", desc: "Prelazak iz rijeke u jezero i morski dio. Specifičan pejzaž i teža, slana voda zahtijevaju potpunu promjenu ritma zaveslaja." },
+  { km: 20.5, label: "20,5", name: "Čeveljuša", desc: "Prolazak kroz kanal i priprema za zadnju dionicu. Ovdje se već osjeća miris mora, a lađari skupljaju zadnje rezerve snage." },
+  { km: 21.5, label: "21,5", name: "Stablina", desc: "Zadnje naselje pred ciljem. Bodrenje s obale postaje sve glasnije dok se lađari pripremaju za finalni sprint i ulazak u luku." },
+  { km: 22.58, label: "22,58", name: "Ploče", sub: "CILJ", desc: "Veličanstveni cilj. Ovdje se okrunjuju pobjednici maratona, slavi izdržljivost i završava ova teška bitka na točno 22.580 metara od starta." },
+];
+const ROUTE_KM = 22.58;
+
 export default function HomePage() {
   useEffect(() => {
     document.documentElement.classList.add("js");
@@ -109,18 +125,20 @@ export default function HomePage() {
     }
     let lit = -1;
 
-    // ---- ruta: live tracker ----
+    // ---- ruta: live tracker (prava karta, 11 postaja) ----
     const route = $(".x-route");
     const base = $<SVGPathElement>("#xBase");
     const trail = $<SVGPathElement>("#xTrail");
     const glow = $<SVGPathElement>("#xGlow");
     const dot = $("#xDot");
     const kmEl = $("#xKm");
+    const stopKmEl = $("#xStopKm");
+    const stopNameEl = $("#xStopName");
+    const stopDescEl = $("#xStopDesc");
     let L = 0;
-    const fr = [0, 10 / 22.5, 1];
-    let sg: Element[] = [];
-    const stops = $$(".x-stop");
-    const rbgs = $$<HTMLImageElement>(".x-rbg img");
+    const fr = STOPS.map((s) => s.km / ROUTE_KM);
+    let sg: SVGGElement[] = [];
+    const railItems = $$(".x-rail-item");
     let q = 0, act = -1;
 
     if (base && trail && glow && dot && kmEl) {
@@ -129,8 +147,8 @@ export default function HomePage() {
         p.style.strokeDasharray = String(L);
         p.style.strokeDashoffset = String(L);
       });
-      sg = [0, 1, 2].map((i) => {
-        const g = $(`#xs${i}`)!;
+      sg = STOPS.map((_s, i) => {
+        const g = $<SVGGElement>(`#xs${i}`)!;
         const pt = base.getPointAtLength(L * fr[i]);
         g.setAttribute("transform", `translate(${pt.x} ${pt.y})`);
         return g;
@@ -245,13 +263,18 @@ export default function HomePage() {
           glow.style.strokeDashoffset = String(off);
           const pt = base.getPointAtLength(L * q);
           dot.setAttribute("transform", `translate(${pt.x} ${pt.y})`);
-          kmEl.textContent = (q * 22.5).toFixed(1).replace(".", ",");
-          const a = q >= 0.995 ? 2 : q >= fr[1] ? 1 : 0;
+          const kmNow = q * ROUTE_KM;
+          kmEl.textContent = kmNow.toFixed(1).replace(".", ",");
+          let a = 0;
+          for (let i = 0; i < fr.length; i++) if (q >= fr[i] - 0.004) a = i;
           if (a !== act) {
             act = a;
-            stops.forEach((s, i) => s.classList.toggle("on", i === a));
             sg.forEach((g, i) => g.classList.toggle("on", i <= a));
-            rbgs.forEach((im, i) => im.classList.toggle("on", i === a));
+            railItems.forEach((el, i) => el.classList.toggle("on", i === a));
+            const s = STOPS[a];
+            if (stopKmEl) stopKmEl.textContent = s.label + " KM" + (s.sub ? " · " + s.sub : "");
+            if (stopNameEl) stopNameEl.textContent = s.name;
+            if (stopDescEl) stopDescEl.textContent = s.desc;
           }
         }
       }
@@ -438,41 +461,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= 4. RUTA (pinned, live tracker) ================= */}
+      {/* ================= 4. RUTA (pinned, live tracker na pravoj karti) ================= */}
       <section className="x-route" id="ruta">
         <div className="x-route-stick">
-          <div className="x-rbg" aria-hidden="true">
-            <img
-              className="on"
-              data-bg="0"
-              src="https://maraton-ladja.hr/images/2022/udruga_ladjara_neretve_o_nama.jpg"
-              alt=""
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).style.display = "none";
-              }}
-            />
-            <img
-              data-bg="1"
-              src="https://maraton-ladja.hr/images/slajd/celo_004.jpg"
-              alt=""
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).style.display = "none";
-              }}
-            />
-            <img
-              data-bg="2"
-              src="https://maraton-ladja.hr/images/2022/neretva-luka-tambaca.jpg"
-              alt=""
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).style.display = "none";
-              }}
-            />
-          </div>
           <div className="x-wrap">
             <div className="x-route-head">
               <div>
                 <p className="x-tag" style={{ marginBottom: "1rem" }}>
-                  Nizvodno
+                  Nizvodno · Metković — Ploče
                 </p>
                 <h2 className="x-display x-h2">Ruta</h2>
               </div>
@@ -482,94 +478,84 @@ export default function HomePage() {
                   <span id="xKm">0,0</span>
                   <em>km</em>
                 </b>
-                <span>od 22,5</span>
+                <span>od 22,58</span>
               </div>
             </div>
 
             <div className="x-map">
-              <svg viewBox="0 0 1200 380" fill="none" aria-hidden="true">
+              <img src="/images/ruta-karta.jpg" alt="Karta rute Maratona lađa, Metković – Ploče" />
+              <svg viewBox="0 0 1920 578" fill="none" aria-hidden="true" preserveAspectRatio="none">
                 <defs>
                   <filter id="xBlur" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="7" />
+                    <feGaussianBlur stdDeviation="6" />
                   </filter>
-                </defs>
-                <g stroke="rgba(255,255,255,.07)">
-                  <path d="M0 95H1200M0 190H1200M0 285H1200M150 0V380M300 0V380M450 0V380M600 0V380M750 0V380M900 0V380M1050 0V380" />
-                </g>
-                <path
-                  id="xBase"
-                  d="M40 300 C 230 300 250 100 440 130 S 700 310 830 215 S 1020 70 1160 96"
-                  stroke="rgba(255,255,255,.22)"
-                  strokeWidth="3"
-                  strokeDasharray="4 10"
-                  strokeLinecap="round"
-                />
-                <defs>
                   <linearGradient id="xLineGrad" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0" stopColor="#c81e2c" />
                     <stop offset="1" stopColor="#1f5fd0" />
                   </linearGradient>
                 </defs>
                 <path
-                  id="xGlow"
-                  d="M40 300 C 230 300 250 100 440 130 S 700 310 830 215 S 1020 70 1160 96"
-                  stroke="#c81e2c"
-                  strokeWidth="12"
+                  id="xBase"
+                  d="M1900,75 L1830,85 L1780,100 L1730,120 L1680,150 L1630,190 L1580,230 L1530,270 L1480,310 L1430,350 L1380,390 L1330,420 L1280,440 L1230,460 L1180,470 L1130,465 L1080,450 L1040,410 L1000,370 L950,330 L900,290 L840,250 L780,225 L720,215 L680,200 L645,175 L610,200 L580,165 L540,150 L490,178 L440,168 L400,140 L350,115 L300,102 L230,105 L175,108 L120,100 L65,92"
+                  stroke="rgba(255,255,255,.01)"
+                  strokeWidth="18"
                   strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  id="xGlow"
+                  d="M1900,75 L1830,85 L1780,100 L1730,120 L1680,150 L1630,190 L1580,230 L1530,270 L1480,310 L1430,350 L1380,390 L1330,420 L1280,440 L1230,460 L1180,470 L1130,465 L1080,450 L1040,410 L1000,370 L950,330 L900,290 L840,250 L780,225 L720,215 L680,200 L645,175 L610,200 L580,165 L540,150 L490,178 L440,168 L400,140 L350,115 L300,102 L230,105 L175,108 L120,100 L65,92"
+                  stroke="#c81e2c"
+                  strokeWidth="9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   filter="url(#xBlur)"
-                  opacity=".5"
+                  opacity=".55"
                 />
                 <path
                   id="xTrail"
-                  d="M40 300 C 230 300 250 100 440 130 S 700 310 830 215 S 1020 70 1160 96"
+                  d="M1900,75 L1830,85 L1780,100 L1730,120 L1680,150 L1630,190 L1580,230 L1530,270 L1480,310 L1430,350 L1380,390 L1330,420 L1280,440 L1230,460 L1180,470 L1130,465 L1080,450 L1040,410 L1000,370 L950,330 L900,290 L840,250 L780,225 L720,215 L680,200 L645,175 L610,200 L580,165 L540,150 L490,178 L440,168 L400,140 L350,115 L300,102 L230,105 L175,108 L120,100 L65,92"
                   stroke="url(#xLineGrad)"
-                  strokeWidth="6"
+                  strokeWidth="4"
                   strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
-                <g id="xs0" className="x-sg on">
-                  <circle r="11" />
-                  <text className="x-svgtxt" x="20" y="-22">
-                    METKOVIĆ
-                  </text>
-                </g>
-                <g id="xs1" className="x-sg">
-                  <circle r="11" />
-                  <text className="x-svgtxt" x="0" y="-28" textAnchor="middle">
-                    OPUZEN
-                  </text>
-                </g>
-                <g id="xs2" className="x-sg">
-                  <circle r="11" />
-                  <text className="x-svgtxt" x="-20" y="-22" textAnchor="end">
-                    PLOČE
-                  </text>
-                </g>
+                {STOPS.map((s, i) => (
+                  <g key={s.name} id={`xs${i}`} className={"x-sg" + (i === 0 ? " on" : "")}>
+                    <circle r={i === 0 || i === STOPS.length - 1 || s.name === "Opuzen" || s.name === "Komin" ? 9 : 6} />
+                    {(i === 0 || i === STOPS.length - 1 || s.name === "Opuzen" || s.name === "Komin") && (
+                      <text className="x-svgtxt" x={i === 0 ? -16 : 16} y="-18" textAnchor={i === 0 ? "end" : "start"}>
+                        {s.name.toUpperCase()}
+                      </text>
+                    )}
+                  </g>
+                ))}
                 <g id="xDot">
-                  <circle r="22" fill="#c81e2c" opacity=".22">
-                    <animate attributeName="r" values="14;30;14" dur="1.8s" repeatCount="indefinite" />
+                  <circle r="16" fill="#c81e2c" opacity=".25">
+                    <animate attributeName="r" values="10;22;10" dur="1.8s" repeatCount="indefinite" />
                     <animate attributeName="opacity" values=".4;0;.4" dur="1.8s" repeatCount="indefinite" />
                   </circle>
-                  <circle r="10" fill="url(#xLineGrad)" stroke="#fff" strokeWidth="4" />
+                  <circle r="7" fill="url(#xLineGrad)" stroke="#fff" strokeWidth="3" />
                 </g>
               </svg>
             </div>
 
-            <div className="x-stops">
-              <div className="x-stop on">
-                <small>01</small>
-                <h3 className="x-display">Metković</h3>
-                <p>Start u 17:00. Posadu čini deset veslača, bubnjar i parićar.</p>
-              </div>
-              <div className="x-stop">
-                <small>02</small>
-                <h3 className="x-display">Opuzen</h3>
-                <p>Deset kilometara od starta. Jedino mjesto zamjene: do šest novih veslača.</p>
-              </div>
-              <div className="x-stop">
-                <small>03</small>
-                <h3 className="x-display">Ploče</h3>
-                <p>Cilj nakon 22,5 kilometara. Zadnji kilometri odlučuju poredak.</p>
-              </div>
+            <div className="x-stop-active">
+              <small id="xStopKm">0,0 KM · START</small>
+              <h3 className="x-display" id="xStopName">
+                Metković
+              </h3>
+              <p id="xStopDesc">Početak epske borbe. Spektakularan start ispod mosta, stotine lađa kreću istovremeno uz gromoglasno navijanje i zvukove sirena.</p>
+            </div>
+
+            <div className="x-rail">
+              {STOPS.map((s, i) => (
+                <div key={s.name} className={"x-rail-item" + (i === 0 ? " on" : "")}>
+                  <i />
+                  <small>{s.label} km</small>
+                  <span>{s.name}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

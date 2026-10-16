@@ -109,30 +109,36 @@
       .x-route { position: relative; height: 340vh; background: linear-gradient(185deg, var(--navy) 0%, var(--navy2) 100%); color: #fff; }
       .x-route-stick { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; align-items: center; }
       .x-route-stick::before { content: ""; position: absolute; width: 46vw; height: 46vw; right: -14vw; top: -18vw; background: radial-gradient(circle, rgba(200,30,44,.22), transparent 70%); filter: blur(70px); pointer-events: none; z-index: 1; }
-      .x-rbg { position: absolute; inset: 0; z-index: 0; }
-      .x-rbg img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.06); filter: saturate(1.1) brightness(.85); transition: opacity 1.4s ease; }
-      .x-rbg img.on { opacity: 1; }
-      .x-rbg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(185deg, rgba(13,21,51,.82) 0%, rgba(7,11,30,.88) 55%, rgba(7,11,30,.96) 100%); }
-      .x-route-stick > .x-wrap { padding-top: 6.5rem; position: relative; z-index: 1; }
+      .x-route-stick > .x-wrap { padding-top: 6rem; position: relative; z-index: 1; width: 100%; }
       .x-route-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
       .x-km { text-align: right; }
       .x-km small { display: block; font: 700 .7rem/1 "Archivo", sans-serif; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: .4rem; }
       .x-km b { font: 600 clamp(2.8rem, 6vw, 5.2rem)/.9 var(--num); font-variant-numeric: tabular-nums; }
       .x-km b em { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: .4em; margin-left: .35em; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
       .x-km > span { display: block; color: rgba(255,255,255,.4); font-size: .85rem; margin-top: .25rem; }
-      .x-map { margin: 1.2rem 0 1.4rem; }
-      .x-map svg { width: 100%; height: auto; display: block; overflow: visible; }
-      .x-svgtxt { font-family: var(--disp); font-weight: 700; font-style: normal; font-size: 28px; letter-spacing: .04em; fill: rgba(255,255,255,.45); transition: fill .3s; }
-      .x-sg circle { fill: var(--navy2); stroke: rgba(255,255,255,.65); stroke-width: 4; transition: fill .3s, stroke .3s; }
+      .x-map { position: relative; margin: 1.1rem 0 1.3rem; aspect-ratio: 1920 / 578; border-radius: 4px; overflow: hidden; box-shadow: 0 30px 70px -20px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.08); }
+      .x-map img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(1.05) brightness(.92); }
+      .x-map::after { content: ""; position: absolute; inset: 0; background: linear-gradient(185deg, rgba(7,11,30,.1) 0%, rgba(7,11,30,.05) 60%, rgba(7,11,30,.35) 100%); pointer-events: none; }
+      .x-map svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+      .x-svgtxt { font-family: var(--disp); font-weight: 800; font-style: normal; font-size: 22px; letter-spacing: .03em; fill: rgba(255,255,255,.85); paint-order: stroke; stroke: rgba(7,11,30,.85); stroke-width: 5px; transition: fill .3s; }
+      .x-sg circle { fill: #fff; stroke: var(--navy2); stroke-width: 2.5; transition: fill .3s, stroke .3s, r .3s; }
       .x-sg.on circle { fill: var(--red); stroke: #fff; }
-      .x-sg.on .x-svgtxt { fill: #fff; }
-      .x-stops { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
-      .x-stop { border-top: 3px solid rgba(255,255,255,.18); padding-top: 1rem; opacity: .38; transition: opacity .4s, border-color .4s; }
-      .x-stop.on { opacity: 1; border-color: var(--red); }
-      .x-stop small { font: 700 .8rem/1 "Archivo", sans-serif; color: var(--red); }
-      .x-stop h3 { font-size: clamp(2rem, 4vw, 3.4rem); margin: .5rem 0; }
-      .x-stop p { color: rgba(255,255,255,.7); line-height: 1.5; font-size: .98rem; }
-      @media (max-width: 719px) { .x-stops { grid-template-columns: 1fr; } .x-stop { grid-area: 1 / 1; opacity: 0; } .x-stop.on { opacity: 1; } .x-stops { display: grid; } .x-svgtxt { font-size: 38px; } }
+      .x-sg.on .x-svgtxt { fill: var(--red); }
+
+      .x-stop-active { position: relative; z-index: 1; border-top: 3px solid var(--red); padding-top: 1.1rem; min-height: 8.5rem; }
+      .x-stop-active small { font: 700 .78rem/1 "Archivo", sans-serif; letter-spacing: .14em; color: var(--red); }
+      .x-stop-active h3 { font-size: clamp(2rem, 4.2vw, 3.2rem); margin: .4rem 0 .5rem; }
+      .x-stop-active p { color: rgba(255,255,255,.72); line-height: 1.55; font-size: .98rem; max-width: 42rem; }
+
+      .x-rail { position: relative; z-index: 1; display: flex; gap: 0; margin-top: 1.6rem; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; border-top: 1px solid rgba(255,255,255,.14); }
+      .x-rail::-webkit-scrollbar { display: none; }
+      .x-rail-item { flex: 0 0 auto; width: 9.2rem; padding: .9rem 1rem .2rem 0; border-top: 3px solid rgba(255,255,255,.18); margin-top: -1px; opacity: .4; transition: opacity .35s, border-color .35s; }
+      .x-rail-item i { display: block; width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.4); margin-bottom: .6rem; transition: background .3s, transform .3s; }
+      .x-rail-item.on { opacity: 1; border-color: var(--red); }
+      .x-rail-item.on i { background: var(--red); transform: scale(1.3); }
+      .x-rail-item small { display: block; font: 700 .68rem/1 "Archivo", sans-serif; letter-spacing: .08em; color: rgba(255,255,255,.45); }
+      .x-rail-item span { display: block; margin-top: .3rem; font: 700 .92rem/1.2 var(--disp); text-transform: uppercase; letter-spacing: -.01em; }
+      @media (max-width: 719px) { .x-svgtxt { font-size: 26px; } .x-stop-active { min-height: 10.5rem; } }
 
       /* ---------- TRI DESETLJEĆA (pinned scrubbing timeline) ---------- */
       .x-hist { position: relative; height: 300vh; background: linear-gradient(200deg, var(--navy) 0%, var(--navy2) 100%); color: #fff; }
