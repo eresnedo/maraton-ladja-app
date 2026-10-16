@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Page, Section } from "@/components/Content";
-import { ARTICLES, getArticle } from "@/data/articles";
+import { getNews, getNewsItem } from "@/lib/content";
 import "./article.css";
 
-export const dynamicParams = false;
+export const revalidate = 60;
 
-export function generateStaticParams() {
-  return ARTICLES.map((a) => ({ slug: a.slug }));
+export async function generateStaticParams() {
+  return (await getNews()).map((a) => ({ slug: a.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const a = getArticle(slug);
+  const a = await getNewsItem(slug);
   if (!a) return {};
   return { title: `${a.title} | Maraton lađa`, description: a.excerpt, openGraph: { title: a.title, description: a.excerpt, images: [a.cover] } };
 }
@@ -22,9 +22,9 @@ const fmt = (iso: string) => new Date(iso + "T12:00:00").toLocaleDateString("hr-
 
 export default async function Clanak({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const a = getArticle(slug);
+  const a = await getNewsItem(slug);
   if (!a) notFound();
-  const others = ARTICLES.filter((x) => x.slug !== a.slug).slice(0, 3);
+  const others = (await getNews(4)).filter((x) => x.slug !== a.slug).slice(0, 3);
   return (
     <Page title={a.title} crumbs={[{ label: "Novosti", href: "/novosti" }, { label: fmt(a.date) }]}>
       <Section narrow>

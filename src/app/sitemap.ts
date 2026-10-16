@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
-import { ARTICLES } from "@/data/articles";
+import { getNews, getAlbums } from "@/lib/content";
 import { EDITIONS } from "@/lib/results";
 
 const STATIC = [
@@ -10,10 +10,14 @@ const STATIC = [
   "/o-nama/udruga", "/o-nama/kako-je-pocelo", "/o-nama/povijest", "/o-nama/monografija",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 3600;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [news, albums] = await Promise.all([getNews(), getAlbums()]);
   return [
     ...STATIC.map((p) => ({ url: SITE_URL + p, changeFrequency: "monthly" as const, priority: p === "" ? 1 : 0.7 })),
-    ...ARTICLES.map((a) => ({ url: `${SITE_URL}/novosti/${a.slug}`, lastModified: a.date, priority: 0.6 })),
+    ...news.map((a) => ({ url: `${SITE_URL}/novosti/${a.slug}`, lastModified: a.date, priority: 0.6 })),
+    ...albums.filter((a) => a.count > 0).map((a) => ({ url: `${SITE_URL}/galerija/${a.slug}`, priority: 0.5 })),
     ...EDITIONS.map((e) => ({ url: `${SITE_URL}/rezultati/poredak-po-godinama/${e.year}`, priority: 0.5 })),
   ];
 }

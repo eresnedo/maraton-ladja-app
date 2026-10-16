@@ -342,7 +342,7 @@ export const ARTICLES: Article[] = [
    {
     "t": "file",
     "text": "Preuzmi pravilnik 29. Maratona lađa (PDF)",
-    "href": "PDF)](/dokumenti/pravilnik-29-maratona-ladja-2026.pdf"
+    "href": "/dokumenti/pravilnik-29-maratona-ladja-2026.pdf"
    }
   ]
  }
