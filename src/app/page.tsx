@@ -4,23 +4,9 @@ import Link from "next/link";
 import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import RouteStory from "@/components/RouteStory";
 import "./home.css";
 
-// Službena ruta Maratona lađa, Metković -> Ploče, 22,58 km (izvor: maraton-ladja.hr).
-const STOPS = [
-  { km: 0, label: "0,0", name: "Metković", sub: "START", desc: "Početak epske borbe. Spektakularan start ispod mosta, stotine lađa kreću istovremeno uz gromoglasno navijanje i zvukove sirena." },
-  { km: 4.5, label: "4,5", name: "Kula Norinska", desc: "Prolazak uz staru kulu gdje se rječica Norin ulijeva u Neretvu. Ovdje je rijeka nešto uža i česta su prva velika pretjecanja." },
-  { km: 6.0, label: "6,0", name: "Krvavac", desc: "Živopisno mjesto s velikim brojem navijača na obali. Lađari ovdje osjećaju prvi pravi umor, ali ih publika nosi naprijed." },
-  { km: 9.5, label: "9,5", name: "Opuzen", desc: "Središte doline i jedino mjesto gdje je dozvoljena zamjena veslača. Ovdje vlada ogromna gužva, a taktika brze zamjene često odlučuje pobjednika." },
-  { km: 13.0, label: "13,0", name: "Komin", desc: "Najduže mjesto na ruti s tradicijom apsolutno najžešćeg navijanja. Lokalni navijači priređuju bakljade i vatrenu podršku koja daje novi elan." },
-  { km: 16.5, label: "16,5", name: "Banja", desc: "Ulazak u donji, širi tok. Ovdje se rijeka mijenja, vjetar i valovi postaju jači, a izdržljivost ekipa se stavlja na najveći test." },
-  { km: 18.0, label: "18,0", name: "Šarić Struga", desc: "Zadnji trzaji snage prije samog ušća. Publika neumorno bodri veslače koji sada daju svoje posljednje atome snage." },
-  { km: 19.5, label: "19,5", name: "Rogotin", desc: "Prelazak iz rijeke u jezero i morski dio. Specifičan pejzaž i teža, slana voda zahtijevaju potpunu promjenu ritma zaveslaja." },
-  { km: 20.5, label: "20,5", name: "Čeveljuša", desc: "Prolazak kroz kanal i priprema za zadnju dionicu. Ovdje se već osjeća miris mora, a lađari skupljaju zadnje rezerve snage." },
-  { km: 21.5, label: "21,5", name: "Stablina", desc: "Zadnje naselje pred ciljem. Bodrenje s obale postaje sve glasnije dok se lađari pripremaju za finalni sprint i ulazak u luku." },
-  { km: 22.58, label: "22,58", name: "Ploče", sub: "CILJ", desc: "Veličanstveni cilj. Ovdje se okrunjuju pobjednici maratona, slavi izdržljivost i završava ova teška bitka na točno 22.580 metara od starta." },
-];
-const ROUTE_KM = 22.58;
 
 export default function HomePage() {
   useEffect(() => {
@@ -125,40 +111,6 @@ export default function HomePage() {
     }
     let lit = -1;
 
-    // ---- ruta: live tracker (prava karta, 11 postaja) ----
-    const route = $(".x-route");
-    const base = $<SVGPathElement>("#xBase");
-    const trail = $<SVGPathElement>("#xTrail");
-    const glow = $<SVGPathElement>("#xGlow");
-    const dot = $("#xDot");
-    const kmEl = $("#xKm");
-    const mapImg = $<HTMLImageElement>("#xMapImg");
-    const mapSvg = $<SVGSVGElement>("#xMapSvg");
-    const stopKmEl = $("#xStopKm");
-    const stopNameEl = $("#xStopName");
-    const stopDescEl = $("#xStopDesc");
-    let L = 0;
-    const fr = STOPS.map((s) => s.km / ROUTE_KM);
-    let sg: SVGGElement[] = [];
-    const railItems = $$(".x-rail-item");
-    let q = 0, act = -1;
-
-    if (base && trail && glow && dot && kmEl) {
-      L = base.getTotalLength();
-      [trail, glow].forEach((p) => {
-        p.style.strokeDasharray = String(L);
-        p.style.strokeDashoffset = String(L);
-      });
-      sg = STOPS.map((_s, i) => ({ i, g: $<SVGGElement>(`#xs${i}`) }))
-        .filter((e): e is { i: number; g: SVGGElement } => !!e.g)
-        .map(({ i, g }) => {
-          const pt = base.getPointAtLength(L * fr[i]);
-          g.setAttribute("transform", `translate(${pt.x} ${pt.y})`);
-          g.dataset.idx = String(i);
-          return g;
-        });
-    }
-
     // ---- tri desetljeća: scrubbing timeline ----
     const hist = $(".x-hist");
     const yearEl = $("#xYear");
@@ -253,41 +205,6 @@ export default function HomePage() {
         if (n !== lit) {
           lit = n;
           words.forEach((w, i) => w.classList.toggle("on", i < n));
-        }
-      }
-
-      if (route && base && trail && glow && dot && kmEl) {
-        const rr = route.getBoundingClientRect();
-        const tot = (route as HTMLElement).offsetHeight - vh;
-        if (rr.top < vh && rr.bottom > 0) {
-          const tq = clamp((clamp(-rr.top / tot) - 0.05) / 0.88);
-          q += (tq - q) * 0.14;
-          const off = L * (1 - q);
-          trail.style.strokeDashoffset = String(off);
-          glow.style.strokeDashoffset = String(off);
-          const pt = base.getPointAtLength(L * q);
-          dot.setAttribute("transform", `translate(${pt.x} ${pt.y})`);
-          if (mapImg && mapSvg) {
-            const zoom = 1 + q * 0.4;
-            const panX = (0.5 - pt.x / 1920) * 46 * q;
-            const panY = (0.5 - pt.y / 578) * 46 * q;
-            const t = `scale(${zoom.toFixed(3)}) translate(${panX.toFixed(2)}%, ${panY.toFixed(2)}%)`;
-            mapImg.style.transform = t;
-            mapSvg.style.transform = t;
-          }
-          const kmNow = q * ROUTE_KM;
-          kmEl.textContent = kmNow.toFixed(1).replace(".", ",");
-          let a = 0;
-          for (let i = 0; i < fr.length; i++) if (q >= fr[i] - 0.004) a = i;
-          if (a !== act) {
-            act = a;
-            sg.forEach((g) => g.classList.toggle("on", Number(g.dataset.idx) <= a));
-            railItems.forEach((el, i) => el.classList.toggle("on", i === a));
-            const s = STOPS[a];
-            if (stopKmEl) stopKmEl.textContent = s.label + " KM" + (s.sub ? " · " + s.sub : "");
-            if (stopNameEl) stopNameEl.textContent = s.name;
-            if (stopDescEl) stopDescEl.textContent = s.desc;
-          }
         }
       }
 
@@ -473,105 +390,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= 4. RUTA (pinned, live tracker na pravoj karti) ================= */}
-      <section className="x-route" id="ruta">
-        <div className="x-route-stick">
-          <div className="x-wrap">
-            <div className="x-route-head">
-              <div>
-                <p className="x-tag" style={{ marginBottom: "1rem" }}>
-                  Nizvodno · Metković — Ploče
-                </p>
-                <h2 className="x-display x-h2">Ruta</h2>
-              </div>
-              <div className="x-km">
-                <small>Prijeđeno</small>
-                <b>
-                  <span id="xKm">0,0</span>
-                  <em>km</em>
-                </b>
-                <span>od 22,58</span>
-              </div>
-            </div>
-
-            <div className="x-map">
-              <img id="xMapImg" src="/images/ruta-karta.jpg" alt="Karta rute Maratona lađa, Metković – Ploče" />
-              <svg id="xMapSvg" viewBox="0 0 1920 578" fill="none" aria-hidden="true" preserveAspectRatio="none">
-                <defs>
-                  <filter id="xBlur" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="6" />
-                  </filter>
-                  <linearGradient id="xLineGrad" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0" stopColor="#c81e2c" />
-                    <stop offset="1" stopColor="#1f5fd0" />
-                  </linearGradient>
-                </defs>
-                <path
-                  id="xBase"
-                  d="M1900.0,75.0 C1888.3,76.7 1850.0,80.8 1830.0,85.0 C1810.0,89.2 1796.7,94.2 1780.0,100.0 C1763.3,105.8 1746.7,111.7 1730.0,120.0 C1713.3,128.3 1696.7,138.3 1680.0,150.0 C1663.3,161.7 1646.7,176.7 1630.0,190.0 C1613.3,203.3 1596.7,216.7 1580.0,230.0 C1563.3,243.3 1546.7,256.7 1530.0,270.0 C1513.3,283.3 1496.7,296.7 1480.0,310.0 C1463.3,323.3 1446.7,336.7 1430.0,350.0 C1413.3,363.3 1396.7,378.3 1380.0,390.0 C1363.3,401.7 1346.7,411.7 1330.0,420.0 C1313.3,428.3 1296.7,433.3 1280.0,440.0 C1263.3,446.7 1246.7,455.0 1230.0,460.0 C1213.3,465.0 1196.7,469.2 1180.0,470.0 C1163.3,470.8 1146.7,468.3 1130.0,465.0 C1113.3,461.7 1095.0,459.2 1080.0,450.0 C1065.0,440.8 1053.3,423.3 1040.0,410.0 C1026.7,396.7 1015.0,383.3 1000.0,370.0 C985.0,356.7 966.7,343.3 950.0,330.0 C933.3,316.7 918.3,303.3 900.0,290.0 C881.7,276.7 860.0,260.8 840.0,250.0 C820.0,239.2 800.0,230.8 780.0,225.0 C760.0,219.2 736.7,219.2 720.0,215.0 C703.3,210.8 692.5,206.7 680.0,200.0 C667.5,193.3 656.7,175.0 645.0,175.0 C633.3,175.0 620.8,201.7 610.0,200.0 C599.2,198.3 591.7,173.3 580.0,165.0 C568.3,156.7 555.0,147.8 540.0,150.0 C525.0,152.2 506.7,175.0 490.0,178.0 C473.3,181.0 455.0,174.3 440.0,168.0 C425.0,161.7 415.0,148.8 400.0,140.0 C385.0,131.2 366.7,121.3 350.0,115.0 C333.3,108.7 320.0,103.7 300.0,102.0 C280.0,100.3 250.8,104.0 230.0,105.0 C209.2,106.0 193.3,108.8 175.0,108.0 C156.7,107.2 138.3,102.7 120.0,100.0 C101.7,97.3 74.2,93.3 65.0,92.0"
-                  stroke="rgba(255,255,255,.01)"
-                  strokeWidth="18"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  id="xGlow"
-                  d="M1900.0,75.0 C1888.3,76.7 1850.0,80.8 1830.0,85.0 C1810.0,89.2 1796.7,94.2 1780.0,100.0 C1763.3,105.8 1746.7,111.7 1730.0,120.0 C1713.3,128.3 1696.7,138.3 1680.0,150.0 C1663.3,161.7 1646.7,176.7 1630.0,190.0 C1613.3,203.3 1596.7,216.7 1580.0,230.0 C1563.3,243.3 1546.7,256.7 1530.0,270.0 C1513.3,283.3 1496.7,296.7 1480.0,310.0 C1463.3,323.3 1446.7,336.7 1430.0,350.0 C1413.3,363.3 1396.7,378.3 1380.0,390.0 C1363.3,401.7 1346.7,411.7 1330.0,420.0 C1313.3,428.3 1296.7,433.3 1280.0,440.0 C1263.3,446.7 1246.7,455.0 1230.0,460.0 C1213.3,465.0 1196.7,469.2 1180.0,470.0 C1163.3,470.8 1146.7,468.3 1130.0,465.0 C1113.3,461.7 1095.0,459.2 1080.0,450.0 C1065.0,440.8 1053.3,423.3 1040.0,410.0 C1026.7,396.7 1015.0,383.3 1000.0,370.0 C985.0,356.7 966.7,343.3 950.0,330.0 C933.3,316.7 918.3,303.3 900.0,290.0 C881.7,276.7 860.0,260.8 840.0,250.0 C820.0,239.2 800.0,230.8 780.0,225.0 C760.0,219.2 736.7,219.2 720.0,215.0 C703.3,210.8 692.5,206.7 680.0,200.0 C667.5,193.3 656.7,175.0 645.0,175.0 C633.3,175.0 620.8,201.7 610.0,200.0 C599.2,198.3 591.7,173.3 580.0,165.0 C568.3,156.7 555.0,147.8 540.0,150.0 C525.0,152.2 506.7,175.0 490.0,178.0 C473.3,181.0 455.0,174.3 440.0,168.0 C425.0,161.7 415.0,148.8 400.0,140.0 C385.0,131.2 366.7,121.3 350.0,115.0 C333.3,108.7 320.0,103.7 300.0,102.0 C280.0,100.3 250.8,104.0 230.0,105.0 C209.2,106.0 193.3,108.8 175.0,108.0 C156.7,107.2 138.3,102.7 120.0,100.0 C101.7,97.3 74.2,93.3 65.0,92.0"
-                  stroke="#c81e2c"
-                  strokeWidth="9"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  filter="url(#xBlur)"
-                  opacity=".55"
-                />
-                <path
-                  id="xTrail"
-                  d="M1900.0,75.0 C1888.3,76.7 1850.0,80.8 1830.0,85.0 C1810.0,89.2 1796.7,94.2 1780.0,100.0 C1763.3,105.8 1746.7,111.7 1730.0,120.0 C1713.3,128.3 1696.7,138.3 1680.0,150.0 C1663.3,161.7 1646.7,176.7 1630.0,190.0 C1613.3,203.3 1596.7,216.7 1580.0,230.0 C1563.3,243.3 1546.7,256.7 1530.0,270.0 C1513.3,283.3 1496.7,296.7 1480.0,310.0 C1463.3,323.3 1446.7,336.7 1430.0,350.0 C1413.3,363.3 1396.7,378.3 1380.0,390.0 C1363.3,401.7 1346.7,411.7 1330.0,420.0 C1313.3,428.3 1296.7,433.3 1280.0,440.0 C1263.3,446.7 1246.7,455.0 1230.0,460.0 C1213.3,465.0 1196.7,469.2 1180.0,470.0 C1163.3,470.8 1146.7,468.3 1130.0,465.0 C1113.3,461.7 1095.0,459.2 1080.0,450.0 C1065.0,440.8 1053.3,423.3 1040.0,410.0 C1026.7,396.7 1015.0,383.3 1000.0,370.0 C985.0,356.7 966.7,343.3 950.0,330.0 C933.3,316.7 918.3,303.3 900.0,290.0 C881.7,276.7 860.0,260.8 840.0,250.0 C820.0,239.2 800.0,230.8 780.0,225.0 C760.0,219.2 736.7,219.2 720.0,215.0 C703.3,210.8 692.5,206.7 680.0,200.0 C667.5,193.3 656.7,175.0 645.0,175.0 C633.3,175.0 620.8,201.7 610.0,200.0 C599.2,198.3 591.7,173.3 580.0,165.0 C568.3,156.7 555.0,147.8 540.0,150.0 C525.0,152.2 506.7,175.0 490.0,178.0 C473.3,181.0 455.0,174.3 440.0,168.0 C425.0,161.7 415.0,148.8 400.0,140.0 C385.0,131.2 366.7,121.3 350.0,115.0 C333.3,108.7 320.0,103.7 300.0,102.0 C280.0,100.3 250.8,104.0 230.0,105.0 C209.2,106.0 193.3,108.8 175.0,108.0 C156.7,107.2 138.3,102.7 120.0,100.0 C101.7,97.3 74.2,93.3 65.0,92.0"
-                  stroke="url(#xLineGrad)"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                {STOPS.map(
-                  (s, i) =>
-                    (i === 0 || i === STOPS.length - 1 || s.name === "Opuzen" || s.name === "Komin") && (
-                      <g key={s.name} id={`xs${i}`} className={"x-sg" + (i === 0 ? " on" : "")}>
-                        <text className="x-svgtxt" x={i === 0 ? -16 : 16} y="-18" textAnchor={i === 0 ? "end" : "start"}>
-                          {s.name.toUpperCase()}
-                        </text>
-                      </g>
-                    )
-                )}
-                <g id="xDot">
-                  <circle r="16" fill="#c81e2c" opacity=".25">
-                    <animate attributeName="r" values="10;22;10" dur="1.8s" repeatCount="indefinite" />
-                    <animate attributeName="opacity" values=".4;0;.4" dur="1.8s" repeatCount="indefinite" />
-                  </circle>
-                  <circle r="7" fill="url(#xLineGrad)" stroke="#fff" strokeWidth="3" />
-                </g>
-              </svg>
-            </div>
-
-            <div className="x-stop-active">
-              <small id="xStopKm">0,0 KM · START</small>
-              <h3 className="x-display" id="xStopName">
-                Metković
-              </h3>
-              <p id="xStopDesc">Početak epske borbe. Spektakularan start ispod mosta, stotine lađa kreću istovremeno uz gromoglasno navijanje i zvukove sirena.</p>
-            </div>
-
-            <div className="x-rail">
-              {STOPS.map((s, i) => (
-                <div key={s.name} className={"x-rail-item" + (i === 0 ? " on" : "")}>
-                  <i />
-                  <small>{s.label} km</small>
-                  <span>{s.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ================= 4. RUTA: scroll priča na pravoj karti ================= */}
+      <RouteStory />
 
       {/* ================= 4b. TRI DESETLJEĆA (pinned, scrubbing timeline) ================= */}
       <section className="x-hist" id="tri-desetljeca">
