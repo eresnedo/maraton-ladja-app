@@ -52,20 +52,20 @@ export default function KontaktPage() {
           </div>
 
           <div className="flex flex-wrap gap-3 mt-12">
-            <a href="https://www.facebook.com/maraton.ladja" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-ink/15 text-sm font-700 uppercase hover:border-red hover:text-red transition-colors">
+            <a href="https://www.facebook.com/maraton.ladja" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 border border-ink/15 text-sm font-700 uppercase hover:border-red hover:text-red transition-colors">
               Facebook
             </a>
-            <a href="https://www.instagram.com/maratonlada/" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-ink/15 text-sm font-700 uppercase hover:border-red hover:text-red transition-colors">
+            <a href="https://www.instagram.com/maratonlada/" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 border border-ink/15 text-sm font-700 uppercase hover:border-red hover:text-red transition-colors">
               Instagram
             </a>
-            <a href="https://www.youtube.com/channel/UCHXQoo10tUMeSctWJtm70gQ" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-ink/15 text-sm font-700 uppercase hover:border-red hover:text-red transition-colors">
+            <a href="https://www.youtube.com/channel/UCHXQoo10tUMeSctWJtm70gQ" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 border border-ink/15 text-sm font-700 uppercase hover:border-red hover:text-red transition-colors">
               YouTube
             </a>
           </div>
         </div>
       </section>
 
-      <section className="py-28" style={{ background: "linear-gradient(200deg, var(--navy) 0%, var(--navy2) 100%)", color: "#fff" }}>
+      <section className="py-28" style={{ background: "var(--navy)", color: "#fff" }}>
         <div className="x-wrap grid gap-14 md:grid-cols-2">
           <div>
             <p className="x-tag mb-4">Pošalji upit</p>

@@ -91,12 +91,6 @@ export default function RouteStory() {
     const hint = sec.querySelector<HTMLElement>(".x-rs-hint")!;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // riječi u naslovima postaja ulaze jedna po jedna
-    sec.querySelectorAll<HTMLElement>(".x-rs-h").forEach((h) => {
-      const words = (h.textContent || "").trim().split(/\s+/);
-      h.innerHTML = words.map((w, i) => `<span class="w" style="transition-delay:${i * 80}ms">${w}</span>`).join(" ");
-    });
-
     let map: MLMap | null = null;
     let ready = false;
     let headMk: MLMarker | null = null;
@@ -257,7 +251,6 @@ export default function RouteStory() {
         });
         map.addSource("done", {
           type: "geojson",
-          lineMetrics: true,
           data: { type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: [] } },
         });
         map.addLayer({
@@ -272,7 +265,7 @@ export default function RouteStory() {
           type: "line",
           source: "done",
           layout: { "line-cap": "round", "line-join": "round" },
-          paint: { "line-color": "#c81e2c", "line-width": 16, "line-blur": 12, "line-opacity": 0.5 },
+          paint: { "line-color": "#c81e2c", "line-width": 10, "line-blur": 8, "line-opacity": 0.3 },
         });
         map.addLayer({
           id: "done",
@@ -281,7 +274,7 @@ export default function RouteStory() {
           layout: { "line-cap": "round", "line-join": "round" },
           paint: {
             "line-width": 5,
-            "line-gradient": ["interpolate", ["linear"], ["line-progress"], 0, "#2f6fe4", 0.55, "#7a3aa8", 1, "#ff3b47"],
+            "line-color": "#e2323f",
           },
         });
         ready = true;

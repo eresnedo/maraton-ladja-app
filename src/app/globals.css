@@ -23,7 +23,7 @@
   --redb: #a1172a;
   --paper: #f4f5f8;
   --ink: #08090d;
-  --grad: linear-gradient(115deg, var(--red) 10%, var(--blue2) 100%);
+  --grad: var(--red);
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --disp: "Barlow Condensed", "Archivo", sans-serif;
   --serif: "Fraunces", serif;
@@ -51,12 +51,7 @@ body {
   line-height: 0.92;
   letter-spacing: -0.02em;
 }
-.x-grad {
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+.x-grad { color: var(--red); }
 .x-tag {
   font: 700 0.8rem/1 "Archivo", sans-serif;
   letter-spacing: 0.2em;
@@ -64,43 +59,15 @@ body {
   color: var(--red);
 }
 
-.js .x-r {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
-  transition-delay: var(--d, 0s);
-}
-.js .x-r.in { opacity: 1; transform: none; }
+.js .x-r, .js .x-r.in { opacity: 1; transform: none; }
 
 /* ---------- page hero (podstranice) ---------- */
 .x-phero {
   position: relative;
   padding: 10.5rem 0 5rem;
-  background: linear-gradient(200deg, var(--navy) 0%, var(--navy2) 100%);
+  background: var(--navy);
   color: #fff;
   overflow: hidden;
-}
-.x-phero::before {
-  content: "";
-  position: absolute;
-  width: 44vw;
-  height: 44vw;
-  right: -14vw;
-  top: -20vw;
-  background: radial-gradient(circle, rgba(200, 30, 44, 0.22), transparent 70%);
-  filter: blur(80px);
-  pointer-events: none;
-}
-.x-phero::after {
-  content: "";
-  position: absolute;
-  width: 36vw;
-  height: 36vw;
-  left: -10vw;
-  bottom: -18vw;
-  background: radial-gradient(circle, rgba(31, 95, 208, 0.2), transparent 70%);
-  filter: blur(80px);
-  pointer-events: none;
 }
 .x-crumb {
   position: relative;
@@ -123,33 +90,19 @@ body {
 }
 
 .x-btn {
-  --mx: 0px;
-  --my: 0px;
   display: inline-block;
-  transform: translate(var(--mx), var(--my));
-  background: var(--grad);
+  background: var(--red);
   color: #fff;
-  padding: 1.05rem 2.3rem;
-  font: 700 1.05rem/1 "Archivo", sans-serif;
+  padding: 1rem 2rem;
+  font: 700 .95rem/1 "Archivo", sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 14px 36px -10px rgba(200, 30, 44, 0.5);
+  letter-spacing: 0.05em;
   text-decoration: none;
-  transition: color 0.3s, box-shadow 0.3s;
+  border: 0;
+  cursor: pointer;
+  transition: background 0.2s;
 }
-.x-btn > span { position: relative; z-index: 1; }
-.x-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #fff;
-  transform: translateX(-101%);
-  transition: transform 0.45s var(--ease);
-}
-.x-btn:hover { color: var(--ink); }
-.x-btn:hover::before { transform: none; }
+.x-btn:hover { background: var(--redb); }
 
 @media (prefers-reduced-motion: reduce) {
   .js .x-r { opacity: 1; transform: none; transition: none; }

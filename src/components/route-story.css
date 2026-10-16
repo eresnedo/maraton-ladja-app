@@ -13,27 +13,25 @@
 .x-rs-grid { position: relative; z-index: 2; width: 100%; pointer-events: none; }
 .x-rs-text { max-width: 600px; }
 .x-rs-chapters { display: grid; margin: 1.4rem 0 1.8rem; }
-.x-rs-ch { grid-area: 1 / 1; opacity: 0; transform: translateY(56px); transition: opacity .55s, transform .8s var(--ease); }
+.x-rs-ch { grid-area: 1 / 1; opacity: 0; transition: opacity .4s; }
 .x-rs-ch.on { opacity: 1; transform: none; }
-.x-rs-ch.past { opacity: 0; transform: translateY(-56px); }
+.x-rs-ch.past { opacity: 0; }
 .x-rs-k { font: 700 .82rem/1 "Archivo", sans-serif; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.6); }
 .x-rs-k b { color: var(--red); margin-right: .9em; }
-.x-rs-h { font-family: var(--disp); font-weight: 800; text-transform: uppercase; letter-spacing: -.02em; line-height: .9; font-size: clamp(3.4rem, 7.4vw, 7.4rem); margin: .9rem 0 1.2rem; }
-.x-rs-h .w { display: inline-block; opacity: 0; transform: translateY(.5em) skewY(4deg); transition: opacity .5s, transform .7s var(--ease); }
-.x-rs-ch.on .x-rs-h .w { opacity: 1; transform: none; }
-.x-rs-p { max-width: 30rem; color: rgba(255,255,255,.74); font-size: 1.12rem; line-height: 1.6; }
+.x-rs-h { font-family: var(--disp); font-weight: 700; text-transform: uppercase; letter-spacing: -.01em; line-height: .92; font-size: clamp(3rem, 6vw, 5.6rem); margin: .9rem 0 1.2rem; }
+.x-rs-ch.on .x-rs-p { max-width: 30rem; color: rgba(255,255,255,.74); font-size: 1.12rem; line-height: 1.6; }
 .x-rs-rail { display: flex; gap: 6px; }
 .x-rs-rail i { display: block; height: 3px; width: 22px; background: rgba(255,255,255,.2); transition: background .3s, width .4s var(--ease); }
-.x-rs-rail i.done { background: rgba(200,30,44,.55); }
-.x-rs-rail i.on { background: var(--grad); width: 54px; }
+.x-rs-rail i.done { background: rgba(255,255,255,.55); }
+.x-rs-rail i.on { background: var(--red); width: 44px; }
 
 .x-rs-km { position: absolute; z-index: 2; right: 2.5rem; top: 7.5rem; text-align: right; pointer-events: none; }
 .x-rs-km small { display: block; font: 700 .7rem/1 "Archivo", sans-serif; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.55); }
-.x-rs-km b { display: block; margin: .45rem 0 .35rem; font: 600 clamp(2.8rem, 5.4vw, 4.8rem)/.9 var(--num); font-variant-numeric: tabular-nums; text-shadow: 0 4px 30px rgba(6,10,28,.8); }
-.x-rs-km b em { font-family: var(--serif); font-style: italic; font-size: .42em; margin-left: .3em; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.x-rs-km b { display: block; margin: .45rem 0 .35rem; font: 700 clamp(2.6rem, 5vw, 4.4rem)/.9 var(--disp); font-variant-numeric: tabular-nums; text-shadow: 0 4px 30px rgba(6,10,28,.8); }
+.x-rs-km b em { font-family: var(--disp); font-style: normal; font-weight: 700; font-size: .4em; margin-left: .3em; color: rgba(255,255,255,.6); }
 
 .x-rs-hint { position: absolute; left: 50%; bottom: 26px; z-index: 2; transform: translateX(-50%); font: 700 .72rem/1 "Archivo", sans-serif; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.55); transition: opacity .4s; pointer-events: none; }
-.x-rs-hint::after { content: ""; display: block; width: 1px; height: 30px; margin: 10px auto 0; background: rgba(255,255,255,.55); animation: xRsHint 1.6s ease-in-out infinite; transform-origin: top; }
+.x-rs-hint::after { content: ""; display: block; width: 1px; height: 30px; margin: 10px auto 0; background: rgba(255,255,255,.55);  }
 @keyframes xRsHint { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
 /* markeri postaja */
@@ -51,8 +49,8 @@
 
 /* lađa (vrh rute) */
 .x-rs-head { width: 22px; height: 22px; }
-.x-rs-head b { position: absolute; inset: 3px; border-radius: 50%; background: var(--grad); border: 3px solid #fff; box-shadow: 0 0 24px rgba(200,30,44,.9); }
-.x-rs-head i { position: absolute; inset: -16px; border-radius: 50%; border: 2px solid rgba(255,255,255,.7); animation: xRsHalo 1.8s ease-out infinite; }
+.x-rs-head b { position: absolute; inset: 3px; border-radius: 50%; background: var(--red); border: 3px solid #fff; box-shadow: 0 0 0 4px rgba(200,30,44,.25); }
+.x-rs-head i { display: none; }
 
 .x-rs .maplibregl-ctrl-attrib { background: rgba(6,10,28,.6) !important; font-size: 10px; }
 .x-rs .maplibregl-ctrl-attrib a, .x-rs .maplibregl-ctrl-attrib button { color: rgba(255,255,255,.5) !important; }
@@ -75,8 +73,7 @@
   .x-rs-mk.now span { font-size: 15px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .x-rs-ch, .x-rs-h .w { transition: none; }
-  .x-rs-mk.now i, .x-rs-head i, .x-rs-hint::after { animation: none; }
+  .x-rs-ch,   .x-rs-mk.now i, .x-rs-head i, .x-rs-hint::after { animation: none; }
 }
 
 /* manje gužve: daleke postaje samo kao tiha točka, natpis kad im se lađa približi */

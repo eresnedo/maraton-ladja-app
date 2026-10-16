@@ -48,9 +48,9 @@ export default async function NovostiPage() {
             <a href={`/novosti/${featured.slug}`} className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center group">
               <div
                 className="aspect-16/10.5 overflow-hidden"
-                style={{ background: "linear-gradient(135deg, var(--ocean), var(--navy2))", clipPath: "polygon(0 0,100% 0,100% 92%,92% 100%,0 100%)" }}
+                style={{ background: "var(--paper)" }}
               >
-                <img src={featured.cover_url} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={featured.cover_url} alt="" className="w-full h-full object-cover" />
               </div>
               <div>
                 <time className="block text-red font-700 text-sm mb-3">{fmtDate(featured.published_at)}</time>
@@ -75,9 +75,9 @@ export default async function NovostiPage() {
               <a key={n.slug} href={`/novosti/${n.slug}`} className="block group">
                 <div
                   className="aspect-4/3.2 overflow-hidden"
-                  style={{ background: "linear-gradient(135deg, var(--ocean), var(--navy2))", clipPath: "polygon(0 0,100% 0,100% 86%,86% 100%,0 100%)" }}
+                  style={{ background: "var(--paper)" }}
                 >
-                  <img src={n.cover_url} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <img src={n.cover_url} alt="" className="w-full h-full object-cover" />
                 </div>
                 <time className="block mt-5 text-red font-700 text-sm">{fmtDate(n.published_at)}</time>
                 <h3 className="mt-2 font-800 text-xl uppercase tracking-tight leading-tight group-hover:text-red transition-colors">{n.title}</h3>
