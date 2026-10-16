@@ -1,0 +1,242 @@
+[
+ {
+  "slug": "hep",
+  "name": "HEP",
+  "href": "https://www.hep.hr/",
+  "group": "generalni",
+  "w": 405,
+  "h": 128
+ },
+ {
+  "slug": "htz",
+  "name": "Hrvatska turistička zajednica",
+  "href": "https://croatia.hr/hr-HR",
+  "group": "partneri",
+  "w": 192,
+  "h": 128
+ },
+ {
+  "slug": "dnz",
+  "name": "Dubrovačko-neretvanska županija",
+  "href": "http://www.edubrovnik.org/",
+  "group": "partneri",
+  "w": 229,
+  "h": 82
+ },
+ {
+  "slug": "grad-metkovic",
+  "name": "Grad Metković",
+  "href": "https://grad-metkovic.hr/",
+  "group": "partneri",
+  "w": 141,
+  "h": 67
+ },
+ {
+  "slug": "grad-ploce",
+  "name": "Grad Ploče",
+  "href": "https://ploce.hr/",
+  "group": "partneri",
+  "w": 107,
+  "h": 67
+ },
+ {
+  "slug": "grad-opuzen",
+  "name": "Grad Opuzen",
+  "href": "https://www.opuzen.hr/",
+  "group": "partneri",
+  "w": 134,
+  "h": 65
+ },
+ {
+  "slug": "ministarstvo-turizma-sporta",
+  "name": "Ministarstvo turizma i sporta",
+  "href": "https://mints.gov.hr/",
+  "group": "sponzori",
+  "w": 200,
+  "h": 52
+ },
+ {
+  "slug": "hrvatska-posta",
+  "name": "Hrvatska pošta",
+  "href": "https://www.posta.hr",
+  "group": "sponzori",
+  "w": 640,
+  "h": 252
+ },
+ {
+  "slug": "hrvatska-lutrija",
+  "name": "Hrvatska lutrija",
+  "href": "https://www.lutrija.hr/",
+  "group": "sponzori",
+  "w": 443,
+  "h": 177
+ },
+ {
+  "slug": "telemach",
+  "name": "Telemach",
+  "href": "https://telemach.hr",
+  "group": "sponzori",
+  "w": 543,
+  "h": 162
+ },
+ {
+  "slug": "hpb",
+  "name": "HPB",
+  "href": "https://www.hpb.hr",
+  "group": "sponzori",
+  "w": 324,
+  "h": 142
+ },
+ {
+  "slug": "jadrolinija",
+  "name": "Jadrolinija",
+  "href": "https://www.jadrolinija.hr",
+  "group": "sponzori",
+  "w": 539,
+  "h": 156
+ },
+ {
+  "slug": "aci",
+  "name": "ACI Marinas",
+  "href": "https://aci-marinas.com/",
+  "group": "sponzori",
+  "w": 200,
+  "h": 100
+ },
+ {
+  "slug": "janaf",
+  "name": "Janaf",
+  "href": "https://janaf.hr/",
+  "group": "sponzori",
+  "w": 79,
+  "h": 91
+ },
+ {
+  "slug": "luka-ploce",
+  "name": "Luka Ploče",
+  "href": "https://www.luka-ploce.hr/",
+  "group": "sponzori",
+  "w": 102,
+  "h": 110
+ },
+ {
+  "slug": "lng",
+  "name": "LNG Hrvatska",
+  "href": "https://lng.hr/",
+  "group": "sponzori",
+  "w": 149,
+  "h": 94
+ },
+ {
+  "slug": "oiv",
+  "name": "OIV",
+  "href": "https://oiv.hr",
+  "group": "sponzori",
+  "w": 199,
+  "h": 37
+ },
+ {
+  "slug": "tz-metkovic",
+  "name": "TZ Grada Metkovića",
+  "href": "https://www.tzmetkovic.hr/",
+  "group": "sponzori",
+  "w": 134,
+  "h": 91
+ },
+ {
+  "slug": "groupama",
+  "name": "Groupama",
+  "href": "https://www.groupama.hr/",
+  "group": "sponzori",
+  "w": 200,
+  "h": 87
+ },
+ {
+  "slug": "terra-madre",
+  "name": "Terra Madre",
+  "href": "https://www.vinaterramadre.com/",
+  "group": "sponzori",
+  "w": 127,
+  "h": 96
+ },
+ {
+  "slug": "poljopromet",
+  "name": "Poljopromet",
+  "href": "https://www.poljopromet.hr/",
+  "group": "sponzori",
+  "w": 183,
+  "h": 26
+ },
+ {
+  "slug": "plinacro",
+  "name": "Plinacro",
+  "href": "https://www.plinacro.hr/",
+  "group": "sponzori",
+  "w": 184,
+  "h": 65
+ },
+ {
+  "slug": "hrvatske-sume",
+  "name": "Hrvatske šume",
+  "href": "https://www.hrsume.hr",
+  "group": "sponzori",
+  "w": 180,
+  "h": 40
+ },
+ {
+  "slug": "tz-dnz",
+  "name": "TZ Dubrovačko-neretvanske županije",
+  "href": "https://visitdubrovnik.hr",
+  "group": "sponzori",
+  "w": 118,
+  "h": 94
+ },
+ {
+  "slug": "vina-delmati",
+  "name": "Vina Delmati",
+  "href": "https://vinadelmati.hr/",
+  "group": "sponzori",
+  "w": 193,
+  "h": 78
+ },
+ {
+  "slug": "karlovacko",
+  "name": "Karlovačko",
+  "href": "https://karlovacko.hr",
+  "group": "sponzori",
+  "w": 153,
+  "h": 142
+ },
+ {
+  "slug": "slobodna-dalmacija",
+  "name": "Slobodna Dalmacija",
+  "href": "https://slobodnadalmacija.hr/",
+  "group": "medijski",
+  "w": 180,
+  "h": 58
+ },
+ {
+  "slug": "hrt",
+  "name": "HRT",
+  "href": "https://www.hrt.hr/",
+  "group": "medijski",
+  "w": 150,
+  "h": 101
+ },
+ {
+  "slug": "radio-delta",
+  "name": "Radio Delta",
+  "href": "https://radiodelta.hr/",
+  "group": "medijski",
+  "w": 164,
+  "h": 66
+ },
+ {
+  "slug": "radio-ploce",
+  "name": "Radio Ploče",
+  "href": "https://www.radioploce.hr/",
+  "group": "medijski",
+  "w": 170,
+  "h": 97
+ }
+]

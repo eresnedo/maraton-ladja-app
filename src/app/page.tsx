@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RouteStory from "@/components/RouteStory";
+import Partners from "@/components/Partners";
 import "./home.css";
 
 // TODO Nedo: potvrdi datum s udrugom (druga subota u kolovozu, 17:00).
@@ -69,11 +70,6 @@ const EXPLORE = [
   { n: "04", title: "Pravilnik i prijave", text: "Uvjeti natjecanja i prijava ekipe", href: "/utrke/pravilnik-i-prijave" },
 ];
 
-const PARTNERS = [
-  "HEP", "Hrvatska turistička zajednica", "Ministarstvo turizma i sporta", "Dubrovačko-neretvanska županija",
-  "Grad Metković", "Grad Opuzen", "Grad Ploče", "HRT", "Hrvatska pošta", "Hrvatska lutrija", "Telemach",
-  "Jadrolinija", "HPB", "ACI Marinas", "Janaf", "Luka Ploče", "LNG Hrvatska", "Plinacro", "Hrvatske šume", "Karlovačko",
-];
 
 const hideBroken = (e: React.SyntheticEvent<HTMLImageElement>) => {
   e.currentTarget.style.display = "none";
@@ -243,16 +239,7 @@ export default function HomePage() {
       </section>
 
       {/* PARTNERI */}
-      <section className="h-sec h-partners" aria-label="Partneri i sponzori">
-        <div className="x-wrap">
-          <p className="h-label">Partneri i sponzori</p>
-          <ul>
-            {PARTNERS.map((p) => (
-              <li key={p}>{p}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <Partners />
 
       <Footer />
     </>
