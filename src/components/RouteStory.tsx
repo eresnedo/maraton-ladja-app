@@ -56,7 +56,7 @@ const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 
 const angDiff = (a: number, b: number) => ((b - a + 540) % 360) - 180;
 
 // pregled cijele rute (početak i kraj priče)
-const OVERVIEW = { center: [17.531, 43.037] as LngLat, zoom: 10.8, pitch: 26, bearing: 0 };
+const OVERVIEW = { center: [17.531, 43.037] as LngLat, zoom: 10.8, pitch: 31, bearing: 0 };
 
 // koliko postaja koja dobiva scrolla: zadržavanje na postaji + vožnja do sljedeće
 const N = STOPS.length;
@@ -103,7 +103,7 @@ export default function RouteStory() {
 
     function camera(fr: Frame) {
       const m = mobile();
-      const near = { zoom: m ? 13.1 : 13.5, pitch: m ? 40 : 50 };
+      const near = { zoom: m ? 13.1 : 13.5, pitch: m ? 45 : 55 };
       if (fr.phase === "intro") {
         const t = ease(fr.t);
         const c = pointAt(0);
@@ -302,11 +302,11 @@ export default function RouteStory() {
   return (
     <section ref={secRef} className="x-rs" id="ruta" aria-label="Ruta Maratona lađa">
       <div className="x-rs-pin">
-        <div ref={mapRef} className="x-rs-map" role="img" aria-label="Karta rute: Metković – Opuzen – Ploče niz Neretvu" />
+        <div ref={mapRef} className="x-rs-map" role="img" aria-label="Karta rute niz Neretvu od Metkovića do Ploča" />
         <div className="x-rs-shade" aria-hidden="true" />
         <div className="x-wrap x-rs-grid">
           <div className="x-rs-text">
-            <p className="x-tag">Ruta · Metković — Ploče</p>
+            <p className="x-tag">Ruta · Metković · Ploče</p>
             <div className="x-rs-chapters">
               {STOPS.map((s, i) => (
                 <article key={s.name} className={"x-rs-ch" + (i === 0 ? " on" : "")}>

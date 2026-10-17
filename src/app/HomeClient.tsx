@@ -12,8 +12,8 @@ import "./home.css";
 
 const CALENDAR = [
   { name: "Brzinske utrke", where: "Opuzen", when: "Datum u najavi", href: "/utrke/brzinske-utrke" },
-  { name: "14. Maraton lađarica", where: "Metković – Opuzen", when: "Datum u najavi", href: "/utrke/maraton-ladarica" },
-  { name: "30. Maraton lađa", where: "Metković – Opuzen – Ploče", when: "Kolovoz 2027.", href: "/utrke/maraton-ladja", main: true },
+  { name: "14. Maraton lađarica", where: "Metković · Opuzen", when: "Datum u najavi", href: "/utrke/maraton-ladarica" },
+  { name: "30. Maraton lađa", where: "Metković · Opuzen · Ploče", when: "Kolovoz 2027.", href: "/utrke/maraton-ladja", main: true },
   { name: "Lađarski kupovi", where: "Dolina Neretve", when: "Cijela sezona", href: "/utrke/ladjarski-kupovi" },
 ];
 
