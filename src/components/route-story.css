@@ -16,7 +16,7 @@
 .x-rs-ch { grid-area: 1 / 1; opacity: 0; transition: opacity .4s; }
 .x-rs-ch.on { opacity: 1; transform: none; }
 .x-rs-ch.past { opacity: 0; }
-.x-rs-k { font: 700 .82rem/1 "Archivo", sans-serif; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.x-rs-k { font: 700 .82rem/1 var(--ui); letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.6); }
 .x-rs-k b { color: var(--red); margin-right: .9em; }
 .x-rs-h { font-family: var(--disp); font-weight: 700; text-transform: uppercase; letter-spacing: -.01em; line-height: .92; font-size: clamp(3rem, 6vw, 5.6rem); margin: .9rem 0 1.2rem; }
 .x-rs-ch.on .x-rs-p { max-width: 30rem; color: rgba(255,255,255,.74); font-size: 1.12rem; line-height: 1.6; }
@@ -26,11 +26,11 @@
 .x-rs-rail i.on { background: var(--red); width: 44px; }
 
 .x-rs-km { position: absolute; z-index: 2; right: 2.5rem; top: 7.5rem; text-align: right; pointer-events: none; }
-.x-rs-km small { display: block; font: 700 .7rem/1 "Archivo", sans-serif; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+.x-rs-km small { display: block; font: 700 .7rem/1 var(--ui); letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.55); }
 .x-rs-km b { display: block; margin: .45rem 0 .35rem; font: 700 clamp(2.6rem, 5vw, 4.4rem)/.9 var(--disp); font-variant-numeric: tabular-nums; text-shadow: 0 4px 30px rgba(6,10,28,.8); }
 .x-rs-km b em { font-family: var(--disp); font-style: normal; font-weight: 700; font-size: .4em; margin-left: .3em; color: rgba(255,255,255,.6); }
 
-.x-rs-hint { position: absolute; left: 50%; bottom: 26px; z-index: 2; transform: translateX(-50%); font: 700 .72rem/1 "Archivo", sans-serif; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.55); transition: opacity .4s; pointer-events: none; }
+.x-rs-hint { position: absolute; left: 50%; bottom: 26px; z-index: 2; transform: translateX(-50%); font: 700 .72rem/1 var(--ui); letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.55); transition: opacity .4s; pointer-events: none; }
 .x-rs-hint::after { content: ""; display: block; width: 1px; height: 30px; margin: 10px auto 0; background: rgba(255,255,255,.55);  }
 @keyframes xRsHint { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
@@ -39,7 +39,7 @@
 .x-rs-mk b { position: absolute; inset: 4px; border-radius: 50%; background: #060a1c; border: 2px solid rgba(255,255,255,.5); transition: background .4s, border-color .4s, inset .4s; }
 .x-rs-mk i { position: absolute; inset: -14px; border-radius: 50%; background: var(--red); opacity: 0; }
 .x-rs-mk span { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); white-space: nowrap; font: 800 15px/1 var(--disp); text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.55); text-shadow: 0 1px 10px #060a1c, 0 0 3px #060a1c; transition: color .4s; }
-.x-rs-mk span em { display: block; margin-bottom: 3px; font: 700 10px/1 "Archivo", sans-serif; font-style: normal; letter-spacing: .16em; color: rgba(255,255,255,.4); }
+.x-rs-mk span em { display: block; margin-bottom: 3px; font: 700 10px/1 var(--ui); font-style: normal; letter-spacing: .16em; color: rgba(255,255,255,.4); }
 .x-rs-mk.l span { left: auto; right: 22px; text-align: right; }
 .x-rs-mk.lit b { background: var(--red); border-color: #fff; }
 .x-rs-mk.lit span { color: #fff; }
@@ -126,7 +126,9 @@
 
 .x-rs-credit { position: absolute; right: .6rem; bottom: .4rem; z-index: 3; margin: 0; font-size: 9px; letter-spacing: .02em; color: rgba(13,21,51,.38); pointer-events: none; }
 @media (max-width: 860px) {
-  .x-rs-grid { padding-top: .85rem; padding-bottom: 1.1rem; }
+  /* mekani prijelaz karte u bijeli panel s tekstom */
+  .x-rs-grid::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 120px; background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.75) 55%, #fff 100%); pointer-events: none; }
+  .x-rs-grid { border-top: 0 !important; padding-top: .85rem; padding-bottom: 1.1rem; }
   .x-rs-chapters { margin: 0 0 .75rem; }
   .x-rs-k { font-size: .62rem; }
   .x-rs-h { font-size: clamp(1.55rem, 7.5vw, 2rem); margin: .35rem 0 .35rem; }

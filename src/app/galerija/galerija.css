@@ -21,7 +21,7 @@
 .g-lb figure { margin: 0; max-width: 94vw; max-height: 88vh; display: flex; flex-direction: column; align-items: center; }
 .g-lb img { max-width: 94vw; max-height: 82vh; object-fit: contain; }
 .g-lb figcaption { margin-top: .8rem; color: rgba(255,255,255,.7); font-size: .9rem; text-align: center; }
-.g-lb button { position: absolute; border: 0; background: transparent; color: #fff; font: 700 1rem/1 "Archivo", sans-serif; padding: 1rem 1.2rem; cursor: pointer; }
+.g-lb button { position: absolute; border: 0; background: transparent; color: #fff; font: 700 1rem/1 var(--ui); padding: 1rem 1.2rem; cursor: pointer; }
 .g-lb .g-x { top: .5rem; right: .5rem; letter-spacing: .1em; text-transform: uppercase; font-size: .8rem; }
 .g-lb .g-prev, .g-lb .g-next { top: 50%; transform: translateY(-50%); font-size: 2rem; }
 .g-lb .g-prev { left: .2rem; }

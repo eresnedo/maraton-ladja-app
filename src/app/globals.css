@@ -25,16 +25,18 @@
   --ink: #08090d;
   --grad: var(--red);
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --disp: "Barlow Condensed", "Archivo", sans-serif;
+  --disp: "Barlow Condensed", var(--ui);
   --serif: "Fraunces", serif;
   --num: "Fraunces", serif;
 }
 
+html { font-synthesis: none; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
 body {
   overflow-x: clip;
   background: #fff;
   color: var(--ink);
-  font-family: "Archivo", sans-serif;
+  font-family: var(--ui);
+  letter-spacing: -0.011em;
 }
 
 .tight { letter-spacing: -0.03em; }
@@ -53,7 +55,7 @@ body {
 }
 .x-grad { color: var(--red); }
 .x-tag {
-  font: 700 0.8rem/1 "Archivo", sans-serif;
+  font: 700 0.8rem/1 var(--ui);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--red);
@@ -72,7 +74,7 @@ body {
 .x-crumb {
   position: relative;
   z-index: 1;
-  font: 600 0.85rem/1 "Archivo", sans-serif;
+  font: 600 0.85rem/1 var(--ui);
   color: rgba(255, 255, 255, 0.5);
   margin-bottom: 1.4rem;
 }
@@ -94,7 +96,7 @@ body {
   background: var(--red);
   color: #fff;
   padding: 1rem 2rem;
-  font: 700 .95rem/1 "Archivo", sans-serif;
+  font: 700 .95rem/1 var(--ui);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   text-decoration: none;
