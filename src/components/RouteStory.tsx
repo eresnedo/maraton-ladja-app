@@ -87,7 +87,6 @@ export default function RouteStory() {
     const sec = secRef.current!;
     const $$ = <T extends Element>(s: string) => [...sec.querySelectorAll(s)] as T[];
     const chapters = $$<HTMLElement>(".x-rs-ch");
-    const bars = $$<HTMLElement>(".x-rs-rail i");
     const kmEl = sec.querySelector<HTMLElement>(".x-rs-km b span")!;
     const hint = sec.querySelector<HTMLElement>(".x-rs-hint")!;
     const gridEl = sec.querySelector<HTMLElement>(".x-rs-grid");
@@ -194,10 +193,6 @@ export default function RouteStory() {
         chapters.forEach((c, i) => {
           c.classList.toggle("on", i === cur);
           c.classList.toggle("past", i < cur);
-        });
-        bars.forEach((b, i) => {
-          b.classList.toggle("on", i === cur);
-          b.classList.toggle("done", i < cur);
         });
       }
     }
@@ -316,17 +311,11 @@ export default function RouteStory() {
               {STOPS.map((s, i) => (
                 <article key={s.name} className={"x-rs-ch" + (i === 0 ? " on" : "")}>
                   <div className="x-rs-k">
-                    <b>{String(i + 1).padStart(2, "0")}</b>
                     {s.label} km{s.sub ? ` · ${s.sub}` : ""}
                   </div>
                   <h3 className="x-rs-h">{s.name}</h3>
                   <p className="x-rs-p">{s.desc}</p>
                 </article>
-              ))}
-            </div>
-            <div className="x-rs-rail" aria-hidden="true">
-              {STOPS.map((s, i) => (
-                <i key={s.name} className={i === 0 ? "on" : ""} />
               ))}
             </div>
           </div>

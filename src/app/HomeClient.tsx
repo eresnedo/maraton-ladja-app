@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RouteStory from "@/components/RouteStory";
@@ -10,28 +9,6 @@ import type { Article } from "@/data/articles";
 
 const fmtNews = (iso: string) => new Date(iso + "T12:00:00").toLocaleDateString("hr-HR", { day: "numeric", month: "long", year: "numeric" });
 import "./home.css";
-
-// TODO Nedo: potvrdi datum s udrugom (druga subota u kolovozu, 17:00).
-const RACE_DATE = new Date("2027-08-14T17:00:00+02:00").getTime();
-
-function useCountdown() {
-  const [left, setLeft] = useState<number | null>(null);
-  useEffect(() => {
-    const tick = () => setLeft(Math.max(0, RACE_DATE - Date.now()));
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-  if (left === null) return ["--", "--", "--", "--"];
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return [
-    String(Math.floor(left / 864e5)),
-    pad(Math.floor((left % 864e5) / 36e5)),
-    pad(Math.floor((left % 36e5) / 6e4)),
-    pad(Math.floor((left % 6e4) / 1e3)),
-  ];
-}
-
 
 const CALENDAR = [
   { name: "Brzinske utrke", where: "Opuzen", when: "Datum u najavi", href: "/utrke/brzinske-utrke" },
@@ -59,8 +36,6 @@ const hideBroken = (e: React.SyntheticEvent<HTMLImageElement>) => {
 };
 
 export default function HomeClient({ news }: { news: Article[] }) {
-  const [d, h, m, s] = useCountdown();
-
   return (
     <>
       <Header transparent />
@@ -84,23 +59,6 @@ export default function HomeClient({ news }: { news: Article[] }) {
             </a>
           </div>
 
-          <div className="h-facts">
-            <div className="h-cd" aria-label="Odbrojavanje do starta">
-              <small>Do starta</small>
-              <div>
-                <span><b>{d}</b>dana</span>
-                <span><b>{h}</b>sati</span>
-                <span><b>{m}</b>min</span>
-                <span><b>{s}</b>sek</span>
-              </div>
-            </div>
-            <dl className="h-score">
-              <div><dt>Start</dt><dd>Metković, 17:00</dd></div>
-              <div><dt>Ruta</dt><dd>22,5 km</dd></div>
-              <div><dt>Posada</dt><dd>10 veslača</dd></div>
-              <div><dt>Cilj</dt><dd>Ploče</dd></div>
-            </dl>
-          </div>
         </div>
       </section>
 
