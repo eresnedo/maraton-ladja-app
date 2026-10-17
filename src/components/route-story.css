@@ -48,9 +48,9 @@
 @keyframes xRsHalo { from { transform: scale(.3); opacity: .6; } to { transform: scale(1.5); opacity: 0; } }
 
 /* lađa (vrh rute) */
-.x-rs-head { width: 22px; height: 22px; }
-.x-rs-head b { position: absolute; inset: 3px; border-radius: 50%; background: var(--red); border: 3px solid #fff; box-shadow: 0 0 0 4px rgba(200,30,44,.25); }
-.x-rs-head i { display: none; }
+.x-rs-head { width: 24px; height: 64px; filter: drop-shadow(0 0 10px rgba(255,52,69,.55)) drop-shadow(0 2px 4px rgba(0,0,0,.6)); }
+.x-rs-head svg { display: block; overflow: visible; }
+@media (max-width: 860px) { .x-rs-head, .x-rs-head svg { width: 18px; height: 48px; } }
 
 .x-rs .maplibregl-ctrl-attrib { background: rgba(6,10,28,.6) !important; font-size: 10px; }
 .x-rs .maplibregl-ctrl-attrib a, .x-rs .maplibregl-ctrl-attrib button { color: rgba(255,255,255,.5) !important; }

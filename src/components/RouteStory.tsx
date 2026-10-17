@@ -55,6 +55,15 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const angDiff = (a: number, b: number) => ((b - a + 540) % 360) - 180;
 
+// lađa odozgo: trup, deset vesala i kormilo; pramac gleda prema gore (sjever), marker se okreće po smjeru rijeke
+const BOAT = `<svg viewBox="0 0 24 64" width="24" height="64" aria-hidden="true">
+  <g stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".9">
+    ${[18, 25, 32, 39, 46].map((y) => `<line x1="3" y1="${y + 3}" x2="-6" y2="${y + 6}"/><line x1="21" y1="${y + 3}" x2="30" y2="${y + 6}"/>`).join("")}
+  </g>
+  <path d="M12 2 C17 10 19 22 19 34 C19 46 17 55 12 62 C7 55 5 46 5 34 C5 22 7 10 12 2 Z" fill="#e2323f" stroke="#fff" stroke-width="2"/>
+  <line x1="12" y1="12" x2="12" y2="54" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/>
+</svg>`;
+
 // pregled cijele rute (početak i kraj priče)
 const OVERVIEW = { center: [17.531, 43.037] as LngLat, zoom: 10.8, pitch: 26, bearing: 0 };
 
@@ -175,7 +184,7 @@ export default function RouteStory() {
             geometry: { type: "LineString", coordinates: line.length > 1 ? line : [] },
           });
         }
-        if (headMk) headMk.setLngLat(pointAt(fr.d));
+        if (headMk) headMk.setLngLat(pointAt(fr.d)).setRotation(heading(pointAt(fr.d - 120), pointAt(fr.d + 120)));
         stopEls.forEach((el, i) => {
           el.classList.toggle("lit", fr.d >= SD[i] - 30);
           el.classList.toggle("now", i === fr.idx && fr.phase !== "outro");
@@ -246,12 +255,40 @@ export default function RouteStory() {
           if (/water/.test(l.id) && l.type === "line") map.setPaintProperty(l.id, "line-color", "#1a4aa8");
           if (/landcover|landuse|park/.test(l.id) && l.type === "fill") map.setPaintProperty(l.id, "fill-opacity", 0.35);
         }
+        // reljef: brda oko delte Neretve u tamnoplavim sjenama, na desktopu i u 3D
+        map.addSource("dem", {
+          type: "raster-dem",
+          tiles: ["https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"],
+          encoding: "terrarium",
+          tileSize: 256,
+          maxzoom: 13,
+          attribution: "Reljef: Mapzen, AWS Terrain Tiles",
+        });
+        const firstWater = (map.getStyle().layers || []).find((l) => /water/.test(l.id))?.id;
+        map.addLayer(
+          {
+            id: "hills",
+            type: "hillshade",
+            source: "dem",
+            paint: {
+              "hillshade-exaggeration": 0.75,
+              "hillshade-shadow-color": "#01030b",
+              "hillshade-highlight-color": "rgba(120,150,255,.28)",
+              "hillshade-accent-color": "#0b1640",
+              "hillshade-illumination-direction": 315,
+            },
+          },
+          firstWater,
+        );
+        if (!mobile()) map.setTerrain({ source: "dem", exaggeration: 1.35 });
+
         map.addSource("all", {
           type: "geojson",
           data: { type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: ROUTE } },
         });
         map.addSource("done", {
           type: "geojson",
+          lineMetrics: true,
           data: { type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: [] } },
         });
         map.addLayer({
@@ -259,14 +296,14 @@ export default function RouteStory() {
           type: "line",
           source: "all",
           layout: { "line-cap": "round", "line-join": "round" },
-          paint: { "line-color": "rgba(255,255,255,.32)", "line-width": 2, "line-dasharray": [1.2, 2.2] },
+          paint: { "line-color": "rgba(255,255,255,.38)", "line-width": 1.6, "line-dasharray": [1, 2.4] },
         });
         map.addLayer({
           id: "done-glow",
           type: "line",
           source: "done",
           layout: { "line-cap": "round", "line-join": "round" },
-          paint: { "line-color": "#c81e2c", "line-width": 10, "line-blur": 8, "line-opacity": 0.3 },
+          paint: { "line-color": "#ff3445", "line-width": 16, "line-blur": 12, "line-opacity": 0.28 },
         });
         map.addLayer({
           id: "done",
@@ -274,8 +311,9 @@ export default function RouteStory() {
           source: "done",
           layout: { "line-cap": "round", "line-join": "round" },
           paint: {
-            "line-width": 5,
-            "line-color": "#e2323f",
+            "line-width": ["interpolate", ["linear"], ["zoom"], 10, 3, 14, 5.5],
+            // trag lađe: tamnije crveno iza, užareno pri vrhu
+            "line-gradient": ["interpolate", ["linear"], ["line-progress"], 0, "#8f1420", 0.6, "#d8283a", 0.94, "#ff4a57", 1, "#ffd7da"],
           },
         });
         ready = true;
@@ -293,8 +331,8 @@ export default function RouteStory() {
       });
       const head = document.createElement("div");
       head.className = "x-rs-head";
-      head.innerHTML = "<i></i><b></b>";
-      headMk = new maplibregl.Marker({ element: head }).setLngLat(pointAt(0)).addTo(map);
+      head.innerHTML = BOAT;
+      headMk = new maplibregl.Marker({ element: head, rotationAlignment: "map", pitchAlignment: "map" }).setLngLat(pointAt(0)).addTo(map);
       draw();
     })();
 
