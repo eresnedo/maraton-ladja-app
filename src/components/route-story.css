@@ -19,7 +19,7 @@
 .x-rs-ch.past { opacity: 0; }
 .x-rs-k { font: 700 .82rem/1 var(--ui); letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.6); }
 .x-rs-k b { color: var(--red); margin-right: .9em; }
-.x-rs-h { font-family: var(--disp); font-weight: 700; text-transform: uppercase; letter-spacing: -.01em; line-height: .92; font-size: clamp(3rem, 6vw, 5.6rem); margin: .9rem 0 1.2rem; }
+.x-rs-h { font-family: var(--disp); font-weight: 700; text-transform: uppercase; letter-spacing: -.01em; line-height: 1.08; font-size: clamp(3rem, 6vw, 5.6rem); margin: .9rem 0 1.2rem; }
 .x-rs-ch.on .x-rs-p { max-width: 30rem; color: rgba(255,255,255,.74); font-size: 1.12rem; line-height: 1.6; }
 .x-rs-rail { display: flex; gap: 6px; }
 .x-rs-rail i { display: block; height: 3px; width: 22px; background: rgba(255,255,255,.2); transition: background .3s, width .4s var(--ease); }
@@ -139,3 +139,6 @@
   .x-rs-km b { font-size: 1.45rem; }
   .x-rs-credit { bottom: auto; top: 74px; right: .7rem; }
 }
+
+/* malo više kontrasta i zasićenja na karti */
+.x-rs-map canvas { filter: contrast(1.06) saturate(1.15); }

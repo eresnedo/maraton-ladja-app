@@ -237,6 +237,12 @@ export default function RouteStory() {
       });
       map.on("style.load", () => {
         if (!map) return;
+        // jači kontrast karte (bolje se vidi i na snimci ekrana): plavija rijeka, malo tamnije kopno
+        for (const l of map.getStyle().layers || []) {
+          if (l.type === "background") map.setPaintProperty(l.id, "background-color", "#efece5");
+          if (/water/.test(l.id) && l.type === "fill") map.setPaintProperty(l.id, "fill-color", "#9fc4e6");
+          if (/water/.test(l.id) && l.type === "line") map.setPaintProperty(l.id, "line-color", "#8fb8df");
+        }
         map.addSource("all", {
           type: "geojson",
           data: { type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: ROUTE } },
@@ -250,7 +256,7 @@ export default function RouteStory() {
           type: "line",
           source: "all",
           layout: { "line-cap": "round", "line-join": "round" },
-          paint: { "line-color": "#5b6b8c", "line-opacity": 0.55, "line-width": 1.4, "line-dasharray": [1.6, 2.2] },
+          paint: { "line-color": "#3d4f75", "line-opacity": 0.7, "line-width": 1.6, "line-dasharray": [1.6, 2.2] },
         });
         map.addLayer({
           id: "done-case",
@@ -264,7 +270,7 @@ export default function RouteStory() {
           type: "line",
           source: "done",
           layout: { "line-cap": "round", "line-join": "round" },
-          paint: { "line-color": "#012a5b", "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1.8, 14, 3] },
+          paint: { "line-color": "#012a5b", "line-width": ["interpolate", ["linear"], ["zoom"], 10, 2.4, 14, 3.8] },
         });
         ready = true;
         draw();
