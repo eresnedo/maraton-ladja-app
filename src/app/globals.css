@@ -25,9 +25,10 @@
   --ink: #08090d;
   --grad: var(--red);
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --disp: "Barlow Condensed", var(--ui);
-  --serif: "Fraunces", serif;
-  --num: "Fraunces", serif;
+  --ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --disp: "Anton", "Inter", Impact, sans-serif;
+  --serif: var(--ui);
+  --num: var(--ui);
 }
 
 html { font-synthesis: none; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
