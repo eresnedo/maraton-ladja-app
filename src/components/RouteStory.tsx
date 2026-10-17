@@ -103,7 +103,7 @@ export default function RouteStory() {
 
     function camera(fr: Frame) {
       const m = mobile();
-      const near = { zoom: m ? 13.1 : 13.5, pitch: m ? 45 : 55 };
+      const near = { zoom: m ? 13.22 : 13.62, pitch: m ? 45 : 55 };
       if (fr.phase === "intro") {
         const t = ease(fr.t);
         const c = pointAt(0);
