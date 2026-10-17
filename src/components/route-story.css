@@ -1,6 +1,6 @@
 /* ---------- RUTA: scroll priča na pravoj karti ---------- */
 .x-rs { position: relative; height: 900vh; background: #060a1c; color: #fff; }
-.x-rs-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; align-items: center; }
+.x-rs-pin { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; display: flex; align-items: center; }
 .x-rs-map { position: absolute; inset: 0; background: #060a1c url("/images/ruta-karta.jpg") center / cover no-repeat; }
 .x-rs-map.maplibregl-map { background-image: none; }
 .x-rs-shade {
@@ -49,7 +49,7 @@
 
 /* vrh rute */
 .x-rs-head { width: 22px; height: 22px; }
-.x-rs-head b { position: absolute; inset: 3px; border-radius: 50%; background: #d81e2f; border: 3px solid #fff; box-shadow: 0 0 0 4px rgba(216,30,47,.22), 0 2px 6px rgba(0,0,0,.25); }
+.x-rs-head b { position: absolute; inset: 5px; border-radius: 50%; background: #c9474e; border: 2px solid #fff; box-shadow: 0 0 0 3px rgba(201,71,78,.2), 0 1px 4px rgba(0,0,0,.25); }
 
 .x-rs .maplibregl-ctrl-attrib { background: rgba(6,10,28,.6) !important; font-size: 10px; }
 .x-rs .maplibregl-ctrl-attrib a, .x-rs .maplibregl-ctrl-attrib button { color: rgba(255,255,255,.5) !important; }
@@ -113,7 +113,7 @@
 .x-rs-mk:not(.lit):not(.next) b { border-color: rgba(13,21,51,.35); }
 .x-rs-mk span { color: rgba(13,21,51,.6); text-shadow: 0 0 6px #fff, 0 0 3px #fff, 0 0 2px #fff; }
 .x-rs-mk span em { color: rgba(13,21,51,.5); }
-.x-rs-mk.lit b { background: #d81e2f; border-color: #fff; box-shadow: 0 0 0 1px rgba(13,21,51,.2); }
+.x-rs-mk.lit b { background: #c9474e; border-color: #fff; box-shadow: 0 0 0 1px rgba(13,21,51,.2); }
 .x-rs-mk.lit span { color: var(--navy); }
 .x-rs .maplibregl-ctrl-attrib { background: rgba(255,255,255,.75) !important; }
 .x-rs .maplibregl-ctrl-attrib a, .x-rs .maplibregl-ctrl-attrib button { color: rgba(13,21,51,.6) !important; }
@@ -122,4 +122,17 @@
   .x-rs-grid { background: #fff; border-top: 1px solid rgba(13,21,51,.1); }
   .x-rs-km { background: rgba(255,255,255,.92); border-color: rgba(13,21,51,.12); }
   .x-rs-km b { text-shadow: none; }
+}
+
+.x-rs-credit { position: absolute; right: .6rem; bottom: .4rem; z-index: 3; margin: 0; font-size: 9px; letter-spacing: .02em; color: rgba(13,21,51,.38); pointer-events: none; }
+@media (max-width: 860px) {
+  .x-rs-grid { padding-top: .85rem; padding-bottom: 1.1rem; }
+  .x-rs-chapters { margin: 0 0 .75rem; }
+  .x-rs-k { font-size: .62rem; }
+  .x-rs-h { font-size: clamp(1.55rem, 7.5vw, 2rem); margin: .35rem 0 .35rem; }
+  .x-rs-p, .x-rs-ch.on .x-rs-p { font-size: .84rem; line-height: 1.45; -webkit-line-clamp: 2; min-height: 2.9em; }
+  .x-rs-km { top: 70px; padding: .4rem .6rem; }
+  .x-rs-km small { font-size: .58rem; }
+  .x-rs-km b { font-size: 1.45rem; }
+  .x-rs-credit { bottom: auto; top: 74px; right: .7rem; }
 }

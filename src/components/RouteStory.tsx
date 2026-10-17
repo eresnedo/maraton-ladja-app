@@ -226,7 +226,7 @@ export default function RouteStory() {
           container: mapRef.current,
           style: "https://basemaps.cartocdn.com/gl/voyager-nolabels-gl-style/style.json",
           interactive: false,
-          attributionControl: { compact: true },
+          attributionControl: false,
           fadeDuration: 0,
           center: v.center,
           zoom: v.zoom,
@@ -255,25 +255,23 @@ export default function RouteStory() {
           type: "line",
           source: "all",
           layout: { "line-cap": "round", "line-join": "round" },
-          paint: { "line-color": "#0d1533", "line-opacity": 0.45, "line-width": 2, "line-dasharray": [1.4, 2] },
+          paint: { "line-color": "#5b6b8c", "line-opacity": 0.55, "line-width": 1.4, "line-dasharray": [1.6, 2.2] },
         });
         map.addLayer({
           id: "done-case",
           type: "line",
           source: "done",
           layout: { "line-cap": "round", "line-join": "round" },
-          paint: { "line-color": "#ffffff", "line-width": ["interpolate", ["linear"], ["zoom"], 10, 6, 14, 9] },
+          paint: { "line-color": "#ffffff", "line-opacity": 0.9, "line-width": ["interpolate", ["linear"], ["zoom"], 10, 3.5, 14, 5.5] },
         });
         map.addLayer({
           id: "done",
           type: "line",
           source: "done",
           layout: { "line-cap": "round", "line-join": "round" },
-          paint: { "line-color": "#d81e2f", "line-width": ["interpolate", ["linear"], ["zoom"], 10, 3.5, 14, 5.5] },
+          paint: { "line-color": "#c9474e", "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1.8, 14, 3] },
         });
         ready = true;
-        // atribucija ostaje skupljena u ikonu (i), da ne prekriva kartu
-        mapRef.current?.querySelector(".maplibregl-ctrl-attrib")?.classList.remove("maplibregl-compact-show");
         draw();
       });
 
@@ -342,6 +340,7 @@ export default function RouteStory() {
           <small>od 22,58</small>
         </div>
         <div className="x-rs-hint">Skrolaj niz Neretvu</div>
+        <p className="x-rs-credit">© OpenStreetMap · CARTO</p>
       </div>
     </section>
   );
