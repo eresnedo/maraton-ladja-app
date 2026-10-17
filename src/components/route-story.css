@@ -47,10 +47,9 @@
 .x-rs-mk.now span { font-size: 18px; }
 @keyframes xRsHalo { from { transform: scale(.3); opacity: .6; } to { transform: scale(1.5); opacity: 0; } }
 
-/* lađa (vrh rute) */
-.x-rs-head { width: 24px; height: 64px; filter: drop-shadow(0 0 10px rgba(255,52,69,.55)) drop-shadow(0 2px 4px rgba(0,0,0,.6)); }
-.x-rs-head svg { display: block; overflow: visible; }
-@media (max-width: 860px) { .x-rs-head, .x-rs-head svg { width: 18px; height: 48px; } }
+/* vrh rute */
+.x-rs-head { width: 22px; height: 22px; }
+.x-rs-head b { position: absolute; inset: 3px; border-radius: 50%; background: #d81e2f; border: 3px solid #fff; box-shadow: 0 0 0 4px rgba(216,30,47,.22), 0 2px 6px rgba(0,0,0,.25); }
 
 .x-rs .maplibregl-ctrl-attrib { background: rgba(6,10,28,.6) !important; font-size: 10px; }
 .x-rs .maplibregl-ctrl-attrib a, .x-rs .maplibregl-ctrl-attrib button { color: rgba(255,255,255,.5) !important; }
@@ -90,3 +89,37 @@
 .x-rs-mk:not(.lit):not(.next) b { border-color: rgba(255,255,255,.28); }
 .x-rs-over .x-rs-mk:not(.major) span { opacity: 0; }
 .x-rs-over .x-rs-mk:not(.major) b { inset: 5px; }
+
+/* ============ svijetla karta (normalne boje) ============ */
+.x-rs { background: #fff; color: var(--navy); }
+.x-rs-map { background-color: #eef0f3; }
+.x-rs-shade {
+  background:
+    linear-gradient(90deg, #fff 0%, rgba(255,255,255,.92) 28%, rgba(255,255,255,0) 58%),
+    linear-gradient(0deg, #fff 0%, rgba(255,255,255,0) 18%),
+    linear-gradient(180deg, #fff 0%, rgba(255,255,255,0) 14%);
+}
+.x-rs-k { color: rgba(13,21,51,.6); }
+.x-rs-h { color: var(--navy); }
+.x-rs-ch.on .x-rs-p { color: rgba(8,9,13,.72); }
+.x-rs-rail i { background: rgba(13,21,51,.14); }
+.x-rs-rail i.done { background: rgba(13,21,51,.45); }
+.x-rs-km small { color: rgba(13,21,51,.55); }
+.x-rs-km b { color: var(--navy); text-shadow: 0 0 18px #fff, 0 0 4px #fff; }
+.x-rs-km b em { color: rgba(13,21,51,.55); }
+.x-rs-hint { color: rgba(13,21,51,.55); }
+.x-rs-hint::after { background: rgba(13,21,51,.4); }
+.x-rs-mk b { background: #fff; border-color: rgba(13,21,51,.55); }
+.x-rs-mk:not(.lit):not(.next) b { border-color: rgba(13,21,51,.35); }
+.x-rs-mk span { color: rgba(13,21,51,.6); text-shadow: 0 0 6px #fff, 0 0 3px #fff, 0 0 2px #fff; }
+.x-rs-mk span em { color: rgba(13,21,51,.5); }
+.x-rs-mk.lit b { background: #d81e2f; border-color: #fff; box-shadow: 0 0 0 1px rgba(13,21,51,.2); }
+.x-rs-mk.lit span { color: var(--navy); }
+.x-rs .maplibregl-ctrl-attrib { background: rgba(255,255,255,.75) !important; }
+.x-rs .maplibregl-ctrl-attrib a, .x-rs .maplibregl-ctrl-attrib button { color: rgba(13,21,51,.6) !important; }
+@media (max-width: 860px) {
+  .x-rs-shade { background: linear-gradient(180deg, #fff 0, rgba(255,255,255,0) 90px), linear-gradient(0deg, #fff 0, rgba(255,255,255,0) 40%); }
+  .x-rs-grid { background: #fff; border-top: 1px solid rgba(13,21,51,.1); }
+  .x-rs-km { background: rgba(255,255,255,.92); border-color: rgba(13,21,51,.12); }
+  .x-rs-km b { text-shadow: none; }
+}

@@ -55,15 +55,6 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const angDiff = (a: number, b: number) => ((b - a + 540) % 360) - 180;
 
-// lađa odozgo: trup, deset vesala i kormilo; pramac gleda prema gore (sjever), marker se okreće po smjeru rijeke
-const BOAT = `<svg viewBox="0 0 24 64" width="24" height="64" aria-hidden="true">
-  <g stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".9">
-    ${[18, 25, 32, 39, 46].map((y) => `<line x1="3" y1="${y + 3}" x2="-6" y2="${y + 6}"/><line x1="21" y1="${y + 3}" x2="30" y2="${y + 6}"/>`).join("")}
-  </g>
-  <path d="M12 2 C17 10 19 22 19 34 C19 46 17 55 12 62 C7 55 5 46 5 34 C5 22 7 10 12 2 Z" fill="#e2323f" stroke="#fff" stroke-width="2"/>
-  <line x1="12" y1="12" x2="12" y2="54" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/>
-</svg>`;
-
 // pregled cijele rute (početak i kraj priče)
 const OVERVIEW = { center: [17.531, 43.037] as LngLat, zoom: 10.8, pitch: 26, bearing: 0 };
 
@@ -73,18 +64,19 @@ const INTRO = 0.6; // u jedinicama poglavlja
 const OUTRO = 0.9;
 const UNITS = INTRO + (N - 1) + OUTRO;
 
-type Frame = { d: number; idx: number; travel: number; phase: "intro" | "run" | "outro"; t: number };
+type Frame = { d: number; idx: number; phase: "intro" | "run" | "outro"; t: number };
+const lastStop = (d: number) => {
+  let i = 0;
+  while (i < N - 1 && SD[i + 1] <= d + 40) i++;
+  return i;
+};
 function frameAt(p: number): Frame {
   const u = p * UNITS;
-  if (u < INTRO) return { d: 0, idx: 0, travel: 0, phase: "intro", t: u / INTRO };
-  if (u > INTRO + (N - 1)) return { d: LEN, idx: N - 1, travel: 0, phase: "outro", t: (u - INTRO - (N - 1)) / OUTRO };
-  const v = u - INTRO;
-  const i = Math.min(N - 2, Math.floor(v));
-  const f = v - i;
-  const hold = 0.28; // dio segmenta na kojem lađa "stoji" na postaji
-  const tr = ease(clamp((f - hold) / (1 - hold)));
-  const d = lerp(SD[i], SD[i + 1], tr);
-  return { d, idx: tr > 0.62 ? i + 1 : i, travel: tr, phase: "run", t: f };
+  if (u < INTRO) return { d: 0, idx: 0, phase: "intro", t: u / INTRO };
+  if (u > INTRO + (N - 1)) return { d: LEN, idx: N - 1, phase: "outro", t: (u - INTRO - (N - 1)) / OUTRO };
+  // ista brzina cijelom rutom: scroll se linearno pretvara u prijeđene metre
+  const d = ((u - INTRO) / (N - 1)) * LEN;
+  return { d, idx: lastStop(d), phase: "run", t: 0 };
 }
 
 export default function RouteStory() {
@@ -105,14 +97,14 @@ export default function RouteStory() {
     let ready = false;
     let headMk: MLMarker | null = null;
     const stopEls: HTMLDivElement[] = [];
-    let p = 0, cur = -1, raf = 0, smoothBearing = 0, bearingInit = false;
+    let p = 0, target = 0, cur = -1, raf = 0, smoothBearing = 0, bearingInit = false;
     let disposed = false;
     let visible = true;
     const mobile = () => innerWidth <= 860;
 
     function camera(fr: Frame) {
       const m = mobile();
-      const near = { zoom: m ? 13.4 : 13.9, pitch: m ? 45 : 60 };
+      const near = { zoom: m ? 13.1 : 13.5, pitch: m ? 40 : 50 };
       if (fr.phase === "intro") {
         const t = ease(fr.t);
         const c = pointAt(0);
@@ -129,21 +121,22 @@ export default function RouteStory() {
         return {
           center: [lerp(c[0], OVERVIEW.center[0], t), lerp(c[1], OVERVIEW.center[1], t)] as LngLat,
           zoom: lerp(near.zoom, OVERVIEW.zoom - (m ? 1.35 : 0), t),
-          pitch: lerp(near.pitch, OVERVIEW.pitch + 6, t),
+          pitch: lerp(near.pitch, OVERVIEW.pitch, t),
           bearingTarget: null,
         };
       }
-      // vožnja: kamera prati lađu, okreće se u smjeru rijeke i lagano odzumira na dužim dionicama
-      const segKm = (SD[Math.min(N - 1, fr.idx + 1)] - SD[Math.max(0, fr.idx - 1)]) / 2000;
-      const dip = clamp(segKm * 0.22, 0.15, 0.85) * Math.sin(Math.PI * fr.travel);
+      // vožnja: kamera prati točku stalnim zoomom i okreće se glatko u smjeru rijeke
       const ahead = pointAt(fr.d + 220);
-      const hd = heading(pointAt(fr.d - 500), pointAt(fr.d + 900));
-      return { center: ahead, zoom: near.zoom - dip, pitch: near.pitch - dip * 8, bearingTarget: hd };
+      const hd = heading(pointAt(fr.d - 700), pointAt(fr.d + 1100));
+      return { center: ahead, zoom: near.zoom, pitch: near.pitch, bearingTarget: hd };
     }
 
     function draw() {
       raf = 0;
       let settle = false;
+      const gap = target - p;
+      p = reduce || Math.abs(gap) < 0.00005 ? target : p + gap * 0.14;
+      if (p !== target) settle = true;
       const fr = frameAt(p);
       const v = camera(fr);
       // glatka rotacija kamere (bez trzanja na zavojima rijeke)
@@ -160,9 +153,9 @@ export default function RouteStory() {
           bearingInit = true;
         }
         const diff = angDiff(smoothBearing, v.bearingTarget);
-        smoothBearing += diff * (reduce ? 1 : 0.09);
+        smoothBearing += diff * (reduce ? 1 : 0.06);
         bearing = smoothBearing;
-        if (Math.abs(diff) > 0.15 && visible) settle = true;
+        if (Math.abs(diff) > 0.15) settle = true;
       }
 
       if (map) {
@@ -184,7 +177,7 @@ export default function RouteStory() {
             geometry: { type: "LineString", coordinates: line.length > 1 ? line : [] },
           });
         }
-        if (headMk) headMk.setLngLat(pointAt(fr.d)).setRotation(heading(pointAt(fr.d - 120), pointAt(fr.d + 120)));
+        if (headMk) headMk.setLngLat(pointAt(fr.d));
         stopEls.forEach((el, i) => {
           el.classList.toggle("lit", fr.d >= SD[i] - 30);
           el.classList.toggle("now", i === fr.idx && fr.phase !== "outro");
@@ -194,7 +187,7 @@ export default function RouteStory() {
       kmEl.textContent = ((fr.d / LEN) * ROUTE_KM).toFixed(1).replace(".", ",");
       hint.style.opacity = p > 0.02 ? "0" : "1";
       sec.classList.toggle("x-rs-over", fr.phase !== "run");
-      if (settle && !raf) raf = requestAnimationFrame(draw);
+      if (settle && visible && !raf) raf = requestAnimationFrame(draw);
 
       if (fr.idx !== cur) {
         cur = fr.idx;
@@ -212,7 +205,7 @@ export default function RouteStory() {
     function onScroll() {
       const r = sec.getBoundingClientRect();
       const len = r.height - innerHeight;
-      p = clamp(-r.top / len);
+      target = clamp(-r.top / len);
       if (!raf) raf = requestAnimationFrame(draw);
     }
 
@@ -230,7 +223,7 @@ export default function RouteStory() {
         const v = camera(fr);
         map = new maplibregl.Map({
           container: mapRef.current,
-          style: "https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json",
+          style: "https://basemaps.cartocdn.com/gl/voyager-nolabels-gl-style/style.json",
           interactive: false,
           attributionControl: { compact: true },
           fadeDuration: 0,
@@ -248,47 +241,12 @@ export default function RouteStory() {
       });
       map.on("style.load", () => {
         if (!map) return;
-        // boje karte u stilu Maratona: duboka navy podloga, Neretva i kanali u plavom
-        for (const l of map.getStyle().layers || []) {
-          if (l.type === "background") map.setPaintProperty(l.id, "background-color", "#060a1c");
-          if (/water/.test(l.id) && l.type === "fill") map.setPaintProperty(l.id, "fill-color", "#0f2f73");
-          if (/water/.test(l.id) && l.type === "line") map.setPaintProperty(l.id, "line-color", "#1a4aa8");
-          if (/landcover|landuse|park/.test(l.id) && l.type === "fill") map.setPaintProperty(l.id, "fill-opacity", 0.35);
-        }
-        // reljef: brda oko delte Neretve u tamnoplavim sjenama, na desktopu i u 3D
-        map.addSource("dem", {
-          type: "raster-dem",
-          tiles: ["https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"],
-          encoding: "terrarium",
-          tileSize: 256,
-          maxzoom: 13,
-          attribution: "Reljef: Mapzen, AWS Terrain Tiles",
-        });
-        const firstWater = (map.getStyle().layers || []).find((l) => /water/.test(l.id))?.id;
-        map.addLayer(
-          {
-            id: "hills",
-            type: "hillshade",
-            source: "dem",
-            paint: {
-              "hillshade-exaggeration": 0.75,
-              "hillshade-shadow-color": "#01030b",
-              "hillshade-highlight-color": "rgba(120,150,255,.28)",
-              "hillshade-accent-color": "#0b1640",
-              "hillshade-illumination-direction": 315,
-            },
-          },
-          firstWater,
-        );
-        if (!mobile()) map.setTerrain({ source: "dem", exaggeration: 1.35 });
-
         map.addSource("all", {
           type: "geojson",
           data: { type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: ROUTE } },
         });
         map.addSource("done", {
           type: "geojson",
-          lineMetrics: true,
           data: { type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: [] } },
         });
         map.addLayer({
@@ -296,27 +254,25 @@ export default function RouteStory() {
           type: "line",
           source: "all",
           layout: { "line-cap": "round", "line-join": "round" },
-          paint: { "line-color": "rgba(255,255,255,.38)", "line-width": 1.6, "line-dasharray": [1, 2.4] },
+          paint: { "line-color": "#0d1533", "line-opacity": 0.45, "line-width": 2, "line-dasharray": [1.4, 2] },
         });
         map.addLayer({
-          id: "done-glow",
+          id: "done-case",
           type: "line",
           source: "done",
           layout: { "line-cap": "round", "line-join": "round" },
-          paint: { "line-color": "#ff3445", "line-width": 16, "line-blur": 12, "line-opacity": 0.28 },
+          paint: { "line-color": "#ffffff", "line-width": ["interpolate", ["linear"], ["zoom"], 10, 6, 14, 9] },
         });
         map.addLayer({
           id: "done",
           type: "line",
           source: "done",
           layout: { "line-cap": "round", "line-join": "round" },
-          paint: {
-            "line-width": ["interpolate", ["linear"], ["zoom"], 10, 3, 14, 5.5],
-            // trag lađe: tamnije crveno iza, užareno pri vrhu
-            "line-gradient": ["interpolate", ["linear"], ["line-progress"], 0, "#8f1420", 0.6, "#d8283a", 0.94, "#ff4a57", 1, "#ffd7da"],
-          },
+          paint: { "line-color": "#d81e2f", "line-width": ["interpolate", ["linear"], ["zoom"], 10, 3.5, 14, 5.5] },
         });
         ready = true;
+        // atribucija ostaje skupljena u ikonu (i), da ne prekriva kartu
+        mapRef.current?.querySelector(".maplibregl-ctrl-attrib")?.classList.remove("maplibregl-compact-show");
         draw();
       });
 
@@ -331,8 +287,8 @@ export default function RouteStory() {
       });
       const head = document.createElement("div");
       head.className = "x-rs-head";
-      head.innerHTML = BOAT;
-      headMk = new maplibregl.Marker({ element: head, rotationAlignment: "map", pitchAlignment: "map" }).setLngLat(pointAt(0)).addTo(map);
+      head.innerHTML = "<b></b>";
+      headMk = new maplibregl.Marker({ element: head }).setLngLat(pointAt(0)).addTo(map);
       draw();
     })();
 
@@ -341,6 +297,7 @@ export default function RouteStory() {
     addEventListener("scroll", onScroll, { passive: true });
     addEventListener("resize", onScroll);
     onScroll();
+    p = target;
     return () => {
       disposed = true;
       vio.disconnect();
