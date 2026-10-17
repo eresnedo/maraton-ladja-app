@@ -19,13 +19,12 @@ export default function Header({ transparent = false }: { transparent?: boolean 
     return () => window.removeEventListener("scroll", onScroll);
   }, [transparent, open]);
 
-  // mobitel: header se skriva dok skrolaš prema dolje, vraća se čim kreneš gore
+  // header se skriva dok skrolaš prema dolje, vraća se čim kreneš gore
   useEffect(() => {
     let last = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      const mobile = window.innerWidth < 1024;
-      if (!mobile || open || y < 80) setHidden(false);
+      if (open || y < 80) setHidden(false);
       else if (y > last + 4) setHidden(true);
       else if (y < last - 4) setHidden(false);
       last = y;
@@ -54,7 +53,7 @@ export default function Header({ transparent = false }: { transparent?: boolean 
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-10 h-16 lg:h-20 flex items-center justify-between gap-8">
         <Link href="/" className="flex items-center shrink-0">
-          <img src="/img/logo.png" srcSet="/img/logo.png 1x, /img/logo@2x.png 2x" alt="Maraton lađa – Udruga lađara Neretve" width={56} height={58} className="h-11 w-auto lg:h-14 object-contain" />
+          <img src="/img/logo.png" srcSet="/img/logo.png 1x, /img/logo@2x.png 2x, /img/logo@3x.png 3x" alt="Maraton lađa – Udruga lađara Neretve" width={56} height={58} className="h-11 w-auto lg:h-14 object-contain" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-9 text-[15px] font-600 tight">
