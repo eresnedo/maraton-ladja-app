@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-navy: #0d1533;
-  --color-navy2: #070b1e;
-  --color-ocean: #123fae;
-  --color-red: #c81e2c;
-  --color-blue2: #1f5fd0;
+  --color-navy: #012a5b;
+  --color-navy2: #001a3a;
+  --color-ocean: #014e9f;
+  --color-red: #e3030f;
+  --color-blue2: #014e9f;
   --color-paper: #f4f5f8;
   --color-ink: #08090d;
   --font-weight-600: 600;
@@ -15,12 +15,13 @@
 }
 
 :root {
-  --navy: #0d1533;
-  --navy2: #070b1e;
-  --ocean: #123fae;
-  --red: #c81e2c;
-  --blue2: #1f5fd0;
-  --redb: #a1172a;
+  --navy: #012a5b;
+  --navy2: #001a3a;
+  --ocean: #014e9f;
+  --red: #e3030f;
+  --blue2: #014e9f;
+  --blue: #014e9f;
+  --redb: #b5020c;
   --paper: #f4f5f8;
   --ink: #08090d;
   --grad: var(--red);
@@ -68,7 +69,7 @@ body {
 .x-phero {
   position: relative;
   padding: 8.5rem 0 4rem;
-  background: var(--navy);
+  background: var(--ocean);
   color: #fff;
   overflow: hidden;
 }

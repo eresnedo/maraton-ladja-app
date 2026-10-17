@@ -1,14 +1,14 @@
 /* ---------- RUTA: scroll priča na pravoj karti ---------- */
-.x-rs { position: relative; height: 900vh; background: #060a1c; color: #fff; }
+.x-rs { position: relative; height: 900vh; background: #001a3a; color: #fff; }
 .x-rs-pin { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; display: flex; align-items: center; }
-.x-rs-map { position: absolute; inset: 0; background: #060a1c url("/images/ruta-karta.jpg") center / cover no-repeat; }
+.x-rs-map { position: absolute; inset: 0; background: #001a3a url("/images/ruta-karta.jpg") center / cover no-repeat; }
 .x-rs-map.maplibregl-map { background-image: none; }
 .x-rs-shade {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background:
-    linear-gradient(90deg, #060a1c 0%, rgba(6,10,28,.88) 30%, rgba(6,10,28,0) 60%),
-    linear-gradient(0deg, #060a1c 0%, rgba(6,10,28,0) 22%),
-    linear-gradient(180deg, #060a1c 0%, rgba(6,10,28,0) 16%);
+    linear-gradient(90deg, #001a3a 0%, rgba(0,26,58,.88) 30%, rgba(0,26,58,0) 60%),
+    linear-gradient(0deg, #001a3a 0%, rgba(0,26,58,0) 22%),
+    linear-gradient(180deg, #001a3a 0%, rgba(0,26,58,0) 16%);
 }
 .x-rs-grid { position: relative; z-index: 2; width: 100%; pointer-events: none; }
 .x-rs-text { max-width: 600px; }
@@ -27,7 +27,7 @@
 
 .x-rs-km { position: absolute; z-index: 2; right: 2.5rem; top: 7.5rem; text-align: right; pointer-events: none; }
 .x-rs-km small { display: block; font: 700 .7rem/1 var(--ui); letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.55); }
-.x-rs-km b { display: block; margin: .45rem 0 .35rem; font: 700 clamp(2.6rem, 5vw, 4.4rem)/.9 var(--disp); font-variant-numeric: tabular-nums; text-shadow: 0 4px 30px rgba(6,10,28,.8); }
+.x-rs-km b { display: block; margin: .45rem 0 .35rem; font: 700 clamp(2.6rem, 5vw, 4.4rem)/.9 var(--disp); font-variant-numeric: tabular-nums; text-shadow: 0 4px 30px rgba(0,26,58,.8); }
 .x-rs-km b em { font-family: var(--disp); font-style: normal; font-weight: 700; font-size: .4em; margin-left: .3em; color: rgba(255,255,255,.6); }
 
 .x-rs-hint { position: absolute; left: 50%; bottom: 26px; z-index: 2; transform: translateX(-50%); font: 700 .72rem/1 var(--ui); letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.55); transition: opacity .4s; pointer-events: none; }
@@ -36,9 +36,9 @@
 
 /* markeri postaja */
 .x-rs-mk { width: 16px; height: 16px; }
-.x-rs-mk b { position: absolute; inset: 4px; border-radius: 50%; background: #060a1c; border: 2px solid rgba(255,255,255,.5); transition: background .4s, border-color .4s, inset .4s; }
+.x-rs-mk b { position: absolute; inset: 4px; border-radius: 50%; background: #001a3a; border: 2px solid rgba(255,255,255,.5); transition: background .4s, border-color .4s, inset .4s; }
 .x-rs-mk i { position: absolute; inset: -14px; border-radius: 50%; background: var(--red); opacity: 0; }
-.x-rs-mk span { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); white-space: nowrap; font: 800 15px/1 var(--disp); text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.55); text-shadow: 0 1px 10px #060a1c, 0 0 3px #060a1c; transition: color .4s; }
+.x-rs-mk span { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); white-space: nowrap; font: 800 15px/1 var(--disp); text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.55); text-shadow: 0 1px 10px #001a3a, 0 0 3px #001a3a; transition: color .4s; }
 .x-rs-mk span em { display: block; margin-bottom: 3px; font: 700 10px/1 var(--ui); font-style: normal; letter-spacing: .16em; color: rgba(255,255,255,.4); }
 .x-rs-mk.l span { left: auto; right: 22px; text-align: right; }
 .x-rs-mk.lit b { background: var(--red); border-color: #fff; }
@@ -49,17 +49,17 @@
 
 /* vrh rute */
 .x-rs-head { width: 22px; height: 22px; }
-.x-rs-head b { position: absolute; inset: 5px; border-radius: 50%; background: #c9474e; border: 2px solid #fff; box-shadow: 0 0 0 3px rgba(201,71,78,.2), 0 1px 4px rgba(0,0,0,.25); }
+.x-rs-head b { position: absolute; inset: 5px; border-radius: 50%; background: #e3030f; border: 2px solid #fff; box-shadow: 0 0 0 3px rgba(227,3,15,.2), 0 1px 4px rgba(0,0,0,.25); }
 
-.x-rs .maplibregl-ctrl-attrib { background: rgba(6,10,28,.6) !important; font-size: 10px; }
+.x-rs .maplibregl-ctrl-attrib { background: rgba(0,26,58,.6) !important; font-size: 10px; }
 .x-rs .maplibregl-ctrl-attrib a, .x-rs .maplibregl-ctrl-attrib button { color: rgba(255,255,255,.5) !important; }
 .x-rs .maplibregl-ctrl-bottom-right { z-index: 3; }
 
 @media (max-width: 860px) {
   /* mobitel: karta gore, tekst u čistom navy panelu dolje */
   .x-rs-pin { align-items: flex-end; }
-  .x-rs-shade { background: linear-gradient(180deg, #060a1c 0, rgba(6,10,28,0) 90px), linear-gradient(0deg, #060a1c 0, rgba(6,10,28,0) 46%); }
-  .x-rs-grid { background: #060a1c; padding-top: 1.1rem; padding-bottom: 1.4rem; border-top: 1px solid rgba(255,255,255,.1); }
+  .x-rs-shade { background: linear-gradient(180deg, #001a3a 0, rgba(0,26,58,0) 90px), linear-gradient(0deg, #001a3a 0, rgba(0,26,58,0) 46%); }
+  .x-rs-grid { background: #001a3a; padding-top: 1.1rem; padding-bottom: 1.4rem; border-top: 1px solid rgba(255,255,255,.1); }
   .x-rs-text > .x-tag { display: none; }
   .x-rs-chapters { margin: 0 0 1rem; }
   .x-rs-k { font-size: .72rem; }
@@ -68,7 +68,7 @@
   .x-rs-rail { gap: 4px; }
   .x-rs-rail i { flex: 1; width: auto; }
   .x-rs-rail i.on { width: auto; flex: 2.4; }
-  .x-rs-km { left: 1.25rem; right: auto; top: 76px; text-align: left; padding: .55rem .8rem; background: rgba(6,10,28,.82); border: 1px solid rgba(255,255,255,.12); }
+  .x-rs-km { left: 1.25rem; right: auto; top: 76px; text-align: left; padding: .55rem .8rem; background: rgba(0,26,58,.82); border: 1px solid rgba(255,255,255,.12); }
   .x-rs-km small:last-child { display: none; }
   .x-rs-km b { font-size: 1.9rem; margin: .3rem 0 0; }
   .x-rs-hint { display: none; }
@@ -99,32 +99,32 @@
     linear-gradient(0deg, #fff 0%, rgba(255,255,255,0) 18%),
     linear-gradient(180deg, #fff 0%, rgba(255,255,255,0) 14%);
 }
-.x-rs-k { color: rgba(13,21,51,.6); }
+.x-rs-k { color: rgba(1,42,91,.6); }
 .x-rs-h { color: var(--navy); }
 .x-rs-ch.on .x-rs-p { color: rgba(8,9,13,.72); }
-.x-rs-rail i { background: rgba(13,21,51,.14); }
-.x-rs-rail i.done { background: rgba(13,21,51,.45); }
-.x-rs-km small { color: rgba(13,21,51,.55); }
+.x-rs-rail i { background: rgba(1,42,91,.14); }
+.x-rs-rail i.done { background: rgba(1,42,91,.45); }
+.x-rs-km small { color: rgba(1,42,91,.55); }
 .x-rs-km b { color: var(--navy); text-shadow: 0 0 18px #fff, 0 0 4px #fff; }
-.x-rs-km b em { color: rgba(13,21,51,.55); }
-.x-rs-hint { color: rgba(13,21,51,.55); }
-.x-rs-hint::after { background: rgba(13,21,51,.4); }
-.x-rs-mk b { background: #fff; border-color: rgba(13,21,51,.55); }
-.x-rs-mk:not(.lit):not(.next) b { border-color: rgba(13,21,51,.35); }
-.x-rs-mk span { color: rgba(13,21,51,.6); text-shadow: 0 0 6px #fff, 0 0 3px #fff, 0 0 2px #fff; }
-.x-rs-mk span em { color: rgba(13,21,51,.5); }
-.x-rs-mk.lit b { background: #c9474e; border-color: #fff; box-shadow: 0 0 0 1px rgba(13,21,51,.2); }
+.x-rs-km b em { color: rgba(1,42,91,.55); }
+.x-rs-hint { color: rgba(1,42,91,.55); }
+.x-rs-hint::after { background: rgba(1,42,91,.4); }
+.x-rs-mk b { background: #fff; border-color: rgba(1,42,91,.55); }
+.x-rs-mk:not(.lit):not(.next) b { border-color: rgba(1,42,91,.35); }
+.x-rs-mk span { color: rgba(1,42,91,.6); text-shadow: 0 0 6px #fff, 0 0 3px #fff, 0 0 2px #fff; }
+.x-rs-mk span em { color: rgba(1,42,91,.5); }
+.x-rs-mk.lit b { background: #e3030f; border-color: #fff; box-shadow: 0 0 0 1px rgba(1,42,91,.2); }
 .x-rs-mk.lit span { color: var(--navy); }
 .x-rs .maplibregl-ctrl-attrib { background: rgba(255,255,255,.75) !important; }
-.x-rs .maplibregl-ctrl-attrib a, .x-rs .maplibregl-ctrl-attrib button { color: rgba(13,21,51,.6) !important; }
+.x-rs .maplibregl-ctrl-attrib a, .x-rs .maplibregl-ctrl-attrib button { color: rgba(1,42,91,.6) !important; }
 @media (max-width: 860px) {
   .x-rs-shade { background: linear-gradient(180deg, #fff 0, rgba(255,255,255,0) 90px), linear-gradient(0deg, #fff 0, rgba(255,255,255,0) 40%); }
-  .x-rs-grid { background: #fff; border-top: 1px solid rgba(13,21,51,.1); }
-  .x-rs-km { background: rgba(255,255,255,.92); border-color: rgba(13,21,51,.12); }
+  .x-rs-grid { background: #fff; border-top: 1px solid rgba(1,42,91,.1); }
+  .x-rs-km { background: rgba(255,255,255,.92); border-color: rgba(1,42,91,.12); }
   .x-rs-km b { text-shadow: none; }
 }
 
-.x-rs-credit { position: absolute; right: .6rem; bottom: .4rem; z-index: 3; margin: 0; font-size: 9px; letter-spacing: .02em; color: rgba(13,21,51,.38); pointer-events: none; }
+.x-rs-credit { position: absolute; right: .6rem; bottom: .4rem; z-index: 3; margin: 0; font-size: 9px; letter-spacing: .02em; color: rgba(1,42,91,.38); pointer-events: none; }
 @media (max-width: 860px) {
   /* mekani prijelaz karte u bijeli panel s tekstom */
   .x-rs-grid::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 120px; background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.75) 55%, #fff 100%); pointer-events: none; }

@@ -8,7 +8,7 @@
 
 .h-sec { padding: 6.5rem 0; background: #fff; }
 .h-sec-paper { background: var(--paper); }
-.h-sec-navy { background: var(--navy); color: #fff; }
+.h-sec-navy { background: var(--ocean); color: #fff; }
 .h-sec-navy .h-h2 { color: #fff; }
 .h-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 3rem; }
 .h-more { font: 700 .9rem/1 var(--ui); letter-spacing: .04em; text-transform: uppercase; color: var(--navy); padding-bottom: .4rem; border-bottom: 2px solid var(--red); }
@@ -17,7 +17,7 @@
 /* ---------- HERO ---------- */
 .h-hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; color: #fff; background: var(--navy2); overflow: hidden; }
 .h-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.h-hero-shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,11,30,.94) 0%, rgba(7,11,30,.7) 38%, rgba(7,11,30,.25) 70%, rgba(7,11,30,.35) 100%); }
+.h-hero-shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,26,58,.94) 0%, rgba(0,26,58,.7) 38%, rgba(0,26,58,.25) 70%, rgba(0,26,58,.35) 100%); }
 .h-hero-inner { position: relative; z-index: 1; padding-top: 7rem; padding-bottom: 3rem; }
 .h-kicker { font: 700 .82rem/1 var(--ui); letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.8); padding-left: 1rem; border-left: 3px solid var(--red); }
 .h-title { margin-top: 1.4rem; font-family: var(--disp); font-weight: 800; text-transform: uppercase; letter-spacing: -.02em; line-height: .88; font-size: clamp(4rem, 13vw, 11rem); }
@@ -41,7 +41,7 @@
 /* ---------- O MARATONU ---------- */
 .h-intro { display: grid; gap: 2rem; }
 @media (min-width: 900px) { .h-intro { grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; } }
-.h-stats { display: grid; grid-template-columns: repeat(2, 1fr); margin-top: 4.5rem; border-top: 1px solid rgba(13,21,51,.15); }
+.h-stats { display: grid; grid-template-columns: repeat(2, 1fr); margin-top: 4.5rem; border-top: 1px solid rgba(1,42,91,.15); }
 @media (min-width: 900px) { .h-stats { grid-template-columns: repeat(4, 1fr); } }
 .h-stats > div { padding: 1.8rem 1.5rem 0 0; }
 .h-stats dt { font: 700 clamp(3rem, 6vw, 4.8rem)/1 var(--disp); color: var(--navy); }
@@ -68,8 +68,8 @@
 .h-card p { margin-top: .6rem; color: rgba(8,9,13,.62); line-height: 1.55; font-size: .97rem; }
 
 /* ---------- KALENDAR ---------- */
-.h-rows { list-style: none; border-top: 1px solid rgba(13,21,51,.18); }
-.h-row { display: grid; grid-template-columns: 1fr auto; gap: .3rem 1.5rem; align-items: baseline; padding: 1.5rem 0; border-bottom: 1px solid rgba(13,21,51,.18); color: var(--navy); }
+.h-rows { list-style: none; border-top: 1px solid rgba(1,42,91,.18); }
+.h-row { display: grid; grid-template-columns: 1fr auto; gap: .3rem 1.5rem; align-items: baseline; padding: 1.5rem 0; border-bottom: 1px solid rgba(1,42,91,.18); color: var(--navy); }
 @media (min-width: 800px) { .h-row { grid-template-columns: 2fr 1.6fr 1fr auto; } }
 .h-row b { font: 700 clamp(1.5rem, 2.8vw, 2.2rem)/1.1 var(--disp); text-transform: uppercase; }
 .h-row span { color: rgba(8,9,13,.6); }
@@ -83,21 +83,21 @@
 .h-explore { display: grid; gap: 1px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.14); }
 @media (min-width: 720px) { .h-explore { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1100px) { .h-explore { grid-template-columns: repeat(4, 1fr); } }
-.h-tile { position: relative; display: block; padding: 2rem 1.8rem 3.6rem; background: var(--navy); transition: background .2s; }
-.h-tile:hover { background: #141d42; }
-.h-tile small { font: 700 .8rem/1 var(--ui); color: var(--red); }
+.h-tile { position: relative; display: block; padding: 2rem 1.8rem 3.6rem; background: var(--ocean); transition: background .2s; }
+.h-tile:hover { background: #013f82; }
+.h-tile small { font: 700 .8rem/1 var(--ui); color: rgba(255,255,255,.6); }
 .h-tile h3 { margin: 1.2rem 0 .6rem; font: 700 1.9rem/1 var(--disp); text-transform: uppercase; }
 .h-tile p { color: rgba(255,255,255,.62); line-height: 1.5; font-size: .95rem; }
 .h-tile i { position: absolute; left: 1.8rem; bottom: 1.4rem; font-style: normal; color: rgba(255,255,255,.6); }
 .h-tile:hover i { color: #fff; }
 
 /* ---------- PARTNERI ---------- */
-.h-partners { border-top: 1px solid rgba(13,21,51,.1); }
+.h-partners { border-top: 1px solid rgba(1,42,91,.1); }
 .p-group { margin-top: 2.6rem; }
 .p-group:first-of-type { margin-top: 0; }
-.p-group h3 { font: 700 .72rem/1 var(--ui); letter-spacing: .16em; text-transform: uppercase; color: rgba(8,9,13,.5); padding-bottom: .9rem; margin-bottom: 0; border-bottom: 1px solid rgba(13,21,51,.12); }
-.p-group ul { list-style: none; display: grid; border-left: 1px solid rgba(13,21,51,.1); }
-.p-group li { border-right: 1px solid rgba(13,21,51,.1); border-bottom: 1px solid rgba(13,21,51,.1); }
+.p-group h3 { font: 700 .72rem/1 var(--ui); letter-spacing: .16em; text-transform: uppercase; color: rgba(8,9,13,.5); padding-bottom: .9rem; margin-bottom: 0; border-bottom: 1px solid rgba(1,42,91,.12); }
+.p-group ul { list-style: none; display: grid; border-left: 1px solid rgba(1,42,91,.1); }
+.p-group li { border-right: 1px solid rgba(1,42,91,.1); border-bottom: 1px solid rgba(1,42,91,.1); }
 .p-group a { display: flex; align-items: center; justify-content: center; height: 100%; padding: 1.4rem 1.2rem; }
 .p-group img { max-width: 100%; object-fit: contain; }
 .p-xl ul { grid-template-columns: 1fr; }

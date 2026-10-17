@@ -269,7 +269,7 @@ export default function RouteStory() {
           type: "line",
           source: "done",
           layout: { "line-cap": "round", "line-join": "round" },
-          paint: { "line-color": "#c9474e", "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1.8, 14, 3] },
+          paint: { "line-color": "#e3030f", "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1.8, 14, 3] },
         });
         ready = true;
         draw();
