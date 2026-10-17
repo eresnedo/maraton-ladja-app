@@ -206,6 +206,7 @@ export default function RouteStory() {
       const r = sec.getBoundingClientRect();
       const len = r.height - innerHeight;
       target = clamp(-r.top / len);
+      visible = r.top < innerHeight && r.bottom > 0;
       if (!raf) raf = requestAnimationFrame(draw);
     }
 
@@ -292,15 +293,12 @@ export default function RouteStory() {
       draw();
     })();
 
-    const vio = new IntersectionObserver((e) => (visible = e[0].isIntersecting));
-    vio.observe(sec);
     addEventListener("scroll", onScroll, { passive: true });
     addEventListener("resize", onScroll);
     onScroll();
     p = target;
     return () => {
       disposed = true;
-      vio.disconnect();
       removeEventListener("scroll", onScroll);
       removeEventListener("resize", onScroll);
       if (raf) cancelAnimationFrame(raf);
